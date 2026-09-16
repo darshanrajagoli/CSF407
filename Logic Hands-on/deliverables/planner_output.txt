@@ -1,0 +1,50 @@
+==============================================================================
+Warehouse planning problem -- BFS planner
+==============================================================================
+problem          : warehouse
+initial state I  : {At(Package,A), At(Robot,A)}
+goal G           : {At(Package,C)}
+ground actions   : 10
+                   Move(A,B), Move(B,A), Move(B,C), Move(C,B), PickUp(Package,A), PickUp(Package,B), PickUp(Package,C), Drop(Package,A), Drop(Package,B), Drop(Package,C)
+
+applicable in I  : Move(A,B), PickUp(Package,A)
+    blocked: Move(B,A)              missing At(Robot,B)
+    blocked: Move(B,C)              missing At(Robot,B)
+    blocked: Move(C,B)              missing At(Robot,C)
+    blocked: PickUp(Package,B)      missing At(Package,B), At(Robot,B)
+    blocked: PickUp(Package,C)      missing At(Package,C), At(Robot,C)
+    blocked: Drop(Package,A)        missing Holding(Package)
+    blocked: Drop(Package,B)        missing At(Robot,B), Holding(Package)
+    blocked: Drop(Package,C)        missing At(Robot,C), Holding(Package)
+
+plan found       : True
+plan length      : 4
+states expanded  : 8
+states generated : 16
+peak frontier    : 3
+
+plan:
+  1. PickUp(Package,A)
+  2. Move(A,B)
+  3. Move(B,C)
+  4. Drop(Package,C)
+
+state trajectory:
+  S0  {At(Package,A), At(Robot,A)}
+  S1  {At(Robot,A), Holding(Package)}   via PickUp(Package,A)
+  S2  {At(Robot,B), Holding(Package)}   via Move(A,B)
+  S3  {At(Robot,C), Holding(Package)}   via Move(B,C)
+  S4  {At(Package,C), At(Robot,C)}   via Drop(Package,C)
+
+independent re-execution of the plan:
+  S0 = {At(Package,A), At(Robot,A)}
+    a1 = PickUp(Package,A)    pre ok: At(Package,A) in S; At(Robot,A) in S; Holding(Package) not in S
+  S1 = {At(Robot,A), Holding(Package)}
+    a2 = Move(A,B)            pre ok: At(Robot,A) in S
+  S2 = {At(Robot,B), Holding(Package)}
+    a3 = Move(B,C)            pre ok: At(Robot,B) in S
+  S3 = {At(Robot,C), Holding(Package)}
+    a4 = Drop(Package,C)      pre ok: At(Robot,C) in S; Holding(Package) in S
+  S4 = {At(Package,C), At(Robot,C)}
+  final state |= G = {At(Package,C)}   VALID
+  => PLAN VALID

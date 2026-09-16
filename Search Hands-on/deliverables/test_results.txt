@@ -1,0 +1,61 @@
+======================================================================
+Task 3 -- Testing the generated A* program
+======================================================================
+
+Test 1: original warehouse
+    found=True  length=40  expanded=64  generated=64  peak frontier=3
+    PASS  solution found matches expectation
+    PASS  path length is 40 moves
+    PASS  returned path is legal and contiguous
+
+      #################
+      #S****#*********#
+      #.###*#*#######*#
+      #...#*#*******#*#
+      ###.#*#######*#*#
+      #...#*********#*#
+      #.###########.#*#
+      #.............#G#
+      #################
+
+Test 2: trivial case (goal adjacent to start)
+    found=True  length=1  expanded=2  generated=1  peak frontier=1
+    PASS  solution found matches expectation
+    PASS  path length is 1 moves
+    PASS  returned path is legal and contiguous
+    PASS  expanded exactly 2 states (start, then goal)
+
+Test 3: no solution (goal sealed off)
+    found=False  length=None  expanded=9  generated=8  peak frontier=2
+    PASS  solution found matches expectation
+    PASS  path is empty on failure
+    PASS  terminated having expanded only the reachable region
+
+Test 4: alternative paths (6 via the top, 10 round the bottom)
+    found=True  length=6  expanded=7  generated=7  peak frontier=2
+    PASS  solution found matches expectation
+    PASS  path length is 6 moves
+    PASS  returned path is legal and contiguous
+
+      #########
+      #S*****G#
+      #.#####.#
+      #.......#
+      #########
+    PASS  chose the top corridor, not the detour
+
+Test 5 (extra): map with no wall border
+    found=True  length=2  expanded=3  generated=3  peak frontier=2
+    PASS  solution found matches expectation
+    PASS  path length is 2 moves
+    PASS  returned path is legal and contiguous
+
+Test 6 (extra): ragged rows (unequal line lengths)
+    found=True  length=2  expanded=3  generated=3  peak frontier=2
+    PASS  solution found matches expectation
+    PASS  path length is 2 moves
+    PASS  returned path is legal and contiguous
+
+======================================================================
+20 passed, 0 failed
+======================================================================

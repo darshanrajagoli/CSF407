@@ -1,0 +1,64 @@
+========================================================================================
+Task 5 -- A* compared with blind search (BFS)
+========================================================================================
+
+Supplied warehouse   (64 free cells, h(s0) = 20)
+----------------------------------------------------------------------------------------
+                             found   length  expanded  generated  frontier
+BFS                          True        40        64         63         3
+A* Manhattan, FIFO ties      True        40        64         64         3
+A* Manhattan, prefer deeper  True        40        64         64         3
+
+  (a) both found a solution      : True
+  (b) same path length           : True (40 moves)
+  (c) fewest states expanded     : tied  (BFS 64, A* 64)
+      states saved by A*         : 0  (0.0% fewer)
+      of 64 free cells, BFS reached 100% and A* reached 100%
+
+Open-plan map (control)   (130 free cells, h(s0) = 25)
+----------------------------------------------------------------------------------------
+                             found   length  expanded  generated  frontier
+BFS                          True        25       116        115         8
+A* Manhattan, FIFO ties      True        25       116        115         8
+A* Manhattan, prefer deeper  True        25        26         48        24
+
+  (a) both found a solution      : True
+  (b) same path length           : True (25 moves)
+  (c) fewest states expanded     : A*  (BFS 116, A* 26)
+      states saved by A*         : 90  (77.6% fewer)
+      of 130 free cells, BFS reached 89% and A* reached 20%
+
+
+========================================================================================
+Task 6 -- Investigating the heuristic
+========================================================================================
+
+Supplied warehouse   (64 free cells)
+----------------------------------------------------------------------------------------
+                             found   length  expanded  generated  frontier
+h = 0 (uniform cost)         True        40        64         63         3  optimal
+h = Manhattan                True        40        64         64         3  optimal
+h = Euclidean                True        40        64         64         3  optimal
+h = 2 x Manhattan            True        40        64         64         3  optimal
+  (all rows use the 'prefer deeper' tie-break, so that the heuristic is
+   the only thing varying between them)
+
+Open-plan map (control)   (130 free cells)
+----------------------------------------------------------------------------------------
+                             found   length  expanded  generated  frontier
+h = 0 (uniform cost)         True        25       116        115         8  optimal
+h = Manhattan                True        25        26         48        24  optimal
+h = Euclidean                True        25        92        115        25  optimal
+h = 2 x Manhattan            True        25        26         48        24  optimal
+  (all rows use the 'prefer deeper' tie-break, so that the heuristic is
+   the only thing varying between them)
+
+Cluttered room -- where inadmissibility bites   (143 free cells)
+----------------------------------------------------------------------------------------
+                             found   length  expanded  generated  frontier
+h = 0 (uniform cost)         True        28       142        141        10  optimal
+h = Manhattan                True        28       133        195        64  optimal
+h = Euclidean                True        28       137        142        19  optimal
+h = 2 x Manhattan            True        30        31         54        25  SUBOPTIMAL (+2)
+  (all rows use the 'prefer deeper' tie-break, so that the heuristic is
+   the only thing varying between them)

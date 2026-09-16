@@ -1,0 +1,147 @@
+==============================================================================
+Optional Extension -- Prolog as a Logical Verifier
+(executed by prolog_engine.py; planner.pl and reasoning.pl are
+standard Prolog and load unchanged in SWI-Prolog)
+==============================================================================
+
+------------------------------------------------------------------------------
+Task 6 -- Prolog as a plan verifier: can_move/2
+------------------------------------------------------------------------------
+
+Knowledge base (planner.pl):
+    connected(a,b).  connected(b,a).  connected(b,c).  connected(c,b).
+    can_move(X,Y) :- connected(X,Y).
+
+?- can_move(a,b).
+true.
+   [expected True -- as expected]
+   one resolution step: can_move(a,b) reduces to connected(a,b), which is a fact.
+
+?- can_move(a,c).
+false.
+   [expected False -- as expected]
+   there is no fact connected(a,c) and the rule is not recursive, so the goal
+   is not derivable.  Under the closed-world assumption Prolog answers false.
+
+?- can_move(b,X).
+X = a .
+X = c .
+   [expected True -- as expected]
+   the same rule run 'backwards' -- Prolog enumerates every destination.
+
+?- connected(a,c).
+false.
+   [expected False -- as expected]
+   the missing fact itself.
+
+------------------------------------------------------------------------------
+Task 6 (extension) -- one move vs. reachability
+------------------------------------------------------------------------------
+
+can_move/2 is a SINGLE step and is deliberately not transitive.
+reachable/2 is its transitive closure and needs recursion.
+
+?- can_move(a,c).
+false.
+   [expected False -- as expected]
+   a and c are not adjacent ...
+
+?- reachable(a,c).
+true.
+   [expected True -- as expected]
+   ... but c IS reachable from a, via b.  These are different questions,
+   and conflating them is exactly the error the Python planner made.
+
+------------------------------------------------------------------------------
+Task 7 -- checking proposed actions: valid_move/2
+------------------------------------------------------------------------------
+
+Suppose the Python planner proposes  Move(a,b), Move(b,c).
+
+?- valid_move(a,b).
+true.
+   [expected True -- as expected]
+
+?- valid_move(b,c).
+true.
+   [expected True -- as expected]
+
+?- valid_move(a,c).
+false.
+   [expected False -- as expected]
+   the Challenge in the handout: Move(a,c) is NOT supported by the warehouse
+   knowledge, so the proposed action is rejected.
+
+------------------------------------------------------------------------------
+Generate -> independent verification
+------------------------------------------------------------------------------
+
+the corrected planner
+    Python plan            : PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+    Python self-validation : VALID
+    translated Prolog goal : valid_route(a, [move(a,b),move(b,c)]).
+    Prolog answer          : true.
+    >>> AGREEMENT.  Both the executed transitions and the independent
+        knowledge base accept this plan.
+
+the defective planner (Move over every pair of locations)
+    Python plan            : PickUp(Package,A) -> Move(A,C) -> Drop(Package,C)
+    Python self-validation : VALID
+    translated Prolog goal : valid_route(a, [move(a,c)]).
+    Prolog answer          : false.
+    >>> DISAGREEMENT.  Python says the plan is consistent with its own
+        action model; Prolog says the action model itself is not consistent
+        with the warehouse.  The verifier is right and the planner is wrong.
+            valid_move(a,c) -> FALSE  <-- unsupported
+
+------------------------------------------------------------------------------
+Task 8 -- Prolog and logical reasoning
+------------------------------------------------------------------------------
+
+Knowledge base (reasoning.pl):
+    wet_road.
+    slippery     :- wet_road.
+    reduce_speed :- slippery.
+
+?- reduce_speed.
+true.
+   [expected True -- as expected]
+
+   The corresponding classical derivation:
+
+       WetRoad                                  (fact)
+       WetRoad  -> Slippery                      (rule)
+       ------------------------------- modus ponens
+       Slippery
+       Slippery -> ReduceSpeed                   (rule)
+       ------------------------------- modus ponens
+       ReduceSpeed
+
+       i.e.   WetRoad => Slippery => ReduceSpeed.
+
+   Prolog travels the chain in the opposite direction: it reduces
+   the GOAL reduce_speed to slippery, then to wet_road, then finds
+   wet_road as a fact.  Forward proof, backward search, same theorem.
+
+?- animal(polly).
+true.
+   [expected True -- as expected]
+   Penguin(Polly) => Bird(Polly) => Animal(Polly).
+
+?- animal(rex).
+false.
+   [expected False -- as expected]
+   not 'rex is provably not an animal' but 'rex is not provably an animal'.
+   Prolog reports failure to prove as falsity: the closed-world assumption.
+
+------------------------------------------------------------------------------
+Summary
+------------------------------------------------------------------------------
+
+An AI system can generate a candidate solution,
+while a separate logical system checks it.
+
+The two must not share the knowledge being checked.  Here the
+connectivity of the warehouse is written down twice -- as Python
+action instances and as Prolog facts -- and the verifier earns its
+keep precisely at the point where the two copies disagree.

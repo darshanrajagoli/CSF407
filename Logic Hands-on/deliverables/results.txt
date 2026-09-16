@@ -1,0 +1,104 @@
+==============================================================================
+Experiments -- CS F407 Logical Reasoning for Planning
+==============================================================================
+
+==============================================================================
+1. The reachable state space of the warehouse
+==============================================================================
+
+3 locations, 1 robot, 1 package.
+Ground actions            : 10
+Reachable states from I   : 12
+
+Every reachable state, with the actions applicable in it:
+
+    state                                      applicable actions
+    ------------------------------------------ ------------------------------
+    {At(Package,A), At(Robot,A)}               Move(A,B), PickUp(Package,A)
+    {At(Package,A), At(Robot,B)}               Move(B,A), Move(B,C)
+    {At(Robot,A), Holding(Package)}            Move(A,B), Drop(Package,A)
+    {At(Package,A), At(Robot,C)}               Move(C,B)
+    {At(Robot,B), Holding(Package)}            Move(B,A), Move(B,C), Drop(Package,B)
+    {At(Robot,C), Holding(Package)}            Move(C,B), Drop(Package,C)
+    {At(Package,B), At(Robot,B)}               Move(B,A), Move(B,C), PickUp(Package,B)
+    {At(Package,C), At(Robot,C)}               Move(C,B), PickUp(Package,C)  <- goal
+    {At(Package,B), At(Robot,A)}               Move(A,B)
+    {At(Package,B), At(Robot,C)}               Move(C,B)
+    {At(Package,C), At(Robot,B)}               Move(B,A), Move(B,C)  <- goal
+    {At(Package,C), At(Robot,A)}               Move(A,B)  <- goal
+
+The state space is tiny -- which is why the errors in this
+laboratory are errors of MODELLING, not of scale.  A planner can be
+exhaustively correct over a state space it has described wrongly.
+
+==============================================================================
+2. The three defects, demonstrated
+==============================================================================
+
+Defect 0 -- goal test written as state == G instead of G subset of S
+
+    final state reached : {At(Package,C), At(Robot,C)}
+    the goal            : {At(Package,C)}
+    G subset of S       : True   <- the correct test, plan found
+    S == G              : False   <- the buggy test, 'No plan found'
+
+    Symptom: the planner reports failure on a problem that is
+    obviously solvable.  Loud, and caught by Test A immediately.
+
+Defect 1 -- no duplicate detection (the visited set)
+
+    SOLVABLE problem, defective search  : plan of 4 actions, 25 expansions
+    SOLVABLE problem, corrected search  : plan of 4 actions, 8 expansions
+    -> identical answers.  Test A cannot tell them apart.
+
+    UNSOLVABLE problem, corrected search: no plan found after 3 expansions
+    UNSOLVABLE problem, defective search: still running at   1000 expansions (0.01s)
+    UNSOLVABLE problem, defective search: still running at  10000 expansions (0.05s)
+    UNSOLVABLE problem, defective search: still running at  50000 expansions (0.38s)
+
+    Cause: Move(A,B) and Move(B,A) form a 2-cycle.  The frontier
+    refills faster than it drains, so failure is never reported.
+    Symptom: a hang, not a wrong answer -- and only on the
+    unsolvable problem.  Test B is what exposes it.
+
+Defect 2 -- Move instantiated over every pair of locations
+
+    correct domain   : 10 ground actions, plan of 4: PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+    defective domain : 12 ground actions, plan of 3: PickUp(Package,A) -> Move(A,C) -> Drop(Package,C)
+
+    Is the short plan internally consistent?  True
+    Every precondition of every step is satisfied in the state where
+    the step is taken; the final state entails the goal; BFS even
+    proves it is the SHORTEST such plan.  Re-executing it confirms
+    all of that.  It is still nonsense: there is no corridor from A
+    to C.
+
+    Symptom: none, from inside.  The action model is wrong, and no
+    amount of checking the plan against that model can reveal it.
+    Only a check against an independent description of the
+    warehouse -- planner.pl -- rejects it.  See run_prolog.py.
+
+    Moves used, checked against the connectivity facts:
+        Move(A,C)    connected(a,c) = False    <-- UNSUPPORTED
+
+==============================================================================
+3. Where the SEARCH half of 'Logic + Search' shows up
+==============================================================================
+
+problem                            algo   plan len expanded   generated  peak frontier
+---------------------------------- ------ -------- ---------- ---------- -------------
+warehouse                          BFS    4        8          16         3
+warehouse                          DFS    4        7          13         2
+warehouse, 6 locations in a line   BFS    7        27         58         8
+warehouse, 6 locations in a line   DFS    7        13         28         5
+warehouse, 8 locations in a line   BFS    9        47         101        11
+warehouse, 8 locations in a line   DFS    9        17         38         7
+
+Both are complete here and both return valid plans.  BFS additionally
+returns a SHORTEST plan, because it explores in order of increasing
+plan length and every action costs 1.  DFS has no such guarantee: it
+returns the first plan it reaches, and it only matches BFS on these
+problems because the corridor leaves it almost no wrong turns to take.
+
+Note what does NOT change between the rows: the applicability test.
+Logic decides what is possible; search only decides what to try next.

@@ -1,0 +1,150 @@
+==============================================================================
+Task 3 -- testing the generated planner
+==============================================================================
+
+Test A -- solvable problem (the original warehouse)
+---------------------------------------------------
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : True
+    plan          : PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+    plan valid    : True
+    [ok]   A1 a plan is found
+    [ok]   A2 plan has 4 actions
+    [ok]   A3 plan is independently re-executable and reaches the goal
+    [ok]   A4 final state entails At(Package,C)
+    [ok]   A5 the package is picked up before the robot leaves A
+    [ok]   A6 every action in the plan is a declared action of the problem
+    [ok]   A7 every Move in the plan is between connected locations
+
+Test B -- impossible problem (PickUp removed)
+---------------------------------------------
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : False
+    plan          : -
+    plan valid    : n/a
+    [ok]   B1 reports no plan rather than inventing one
+    [ok]   B2 search terminated (finite expansions)
+    [ok]   B3 the robot can still reach C -- the domain is not trivially dead
+
+Test B2 -- impossible problem (Drop removed)
+--------------------------------------------
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : False
+    plan          : -
+    plan valid    : n/a
+    [ok]   B4 reports no plan when the package can be held but never released
+
+Test B3 -- impossible problem (goal mentions a location with no connection)
+---------------------------------------------------------------------------
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : False
+    plan          : -
+    plan valid    : n/a
+    [ok]   B5 reports no plan when C is disconnected
+
+Test C -- irrelevant actions (robot reaching C is not the package reaching C)
+-----------------------------------------------------------------------------
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : False
+    plan          : -
+    plan valid    : n/a
+    [ok]   C1 moving the robot to C alone does not satisfy the goal
+    [ok]   C2 {At(Robot,C), At(Package,A)} does NOT entail the goal
+    state {At(Package,A), At(Robot,C)} |= G ?  False
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : True
+    plan          : PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+    plan valid    : True
+    [ok]   C3 an irrelevant extra action does not change the plan length
+    [ok]   C4 the irrelevant action does not appear in the plan
+
+Test D -- applicability in the initial state (Task 0)
+-----------------------------------------------------
+    I = {At(Package,A), At(Robot,A)}
+    PickUp(Package,A) applicable in I : True
+    Drop(Package,C)   applicable in I : False   (missing At(Robot,C), Holding(Package))
+    [ok]   D1 PickUp(Package,A) IS applicable in I
+    [ok]   D2 Drop(Package,C) is NOT applicable in I
+    [ok]   D3 Move(A,B) IS applicable in I
+    [ok]   D4 exactly two actions are applicable in I
+
+Test D2 -- negative preconditions are actually enforced
+-------------------------------------------------------
+    [ok]   D5 PickUp is blocked while already Holding(Package)
+    [ok]   D6 the block is attributed to the negative precondition
+
+Test E -- goal test is entailment (subset), not state equality
+--------------------------------------------------------------
+    [ok]   E1 a superset of G satisfies G
+    [ok]   E2 G itself satisfies G
+    [ok]   E3 the final state is NOT equal to G (so == would have failed)
+
+Test F -- the ordering hinted at in Task 1 is NOT a valid plan
+--------------------------------------------------------------
+    S0 = {At(Package,A), At(Robot,A)}
+      a1 = Move(A,B)            pre ok: At(Robot,A) in S
+    S1 = {At(Package,A), At(Robot,B)}
+    step 2: PickUp(Package,B) NOT applicable -- missing At(Package,B)
+    [ok]   F1 Move,PickUp,Move,Drop is rejected
+    [ok]   F2 it is rejected at step 2 for a missing precondition
+
+Test G -- delete-then-add ordering
+----------------------------------
+    Refresh: add {P,Q}, del {P};  apply to {P} -> {P, Q}
+    [ok]   G1 a proposition in both add and delete survives (add wins)
+    [ok]   G2 the other add-effect is present
+
+Test H -- degenerate problems
+-----------------------------
+    initial state : {At(Package,C), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : True
+    plan          : 
+    plan valid    : True
+    [ok]   H1 a goal already true in I yields the empty plan
+    [ok]   H2 no actions and an unsatisfied goal yields no plan
+
+Test I -- BFS optimality, and DFS as a contrast
+-----------------------------------------------
+    BFS plan (4): PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+    DFS plan (4): PickUp(Package,A) -> Move(A,B) -> Move(B,C) -> Drop(Package,C)
+    [ok]   I1 no plan shorter than 4 exists (exhaustive check)
+    [ok]   I2 BFS returns a shortest plan
+    [ok]   I3 DFS also returns a *valid* plan
+    [ok]   I4 DFS's plan is no shorter than BFS's
+
+Test J -- unrestricted Move produces a plan that is internally consistent but physically impossible
+---------------------------------------------------------------------------------------------------
+    initial state : {At(Package,A), At(Robot,A)}
+    goal          : {At(Package,C)}
+    plan found    : True
+    plan          : PickUp(Package,A) -> Move(A,C) -> Drop(Package,C)
+    plan valid    : True
+    [ok]   J1 the planner returns a 3-action plan
+    [ok]   J2 every step of it satisfies its own preconditions
+    [ok]   J3 the plan uses Move(A,C)
+    moves not supported by the connectivity facts: ['Move(A,C)']
+    [ok]   J4 an EXTERNAL connectivity check rejects it
+    -> re-execution alone cannot catch this: the model itself is wrong,
+       so the plan is valid with respect to it.  Only a check against an
+       independent source of knowledge (Task 7's Prolog program) rejects it.
+
+Test K -- duplicate detection is required for termination
+---------------------------------------------------------
+    [ok]   K1 with duplicate detection: terminates and reports no plan
+    with visited set   : terminated after 3 expansions
+    [ok]   K2 without duplicate detection: does NOT terminate
+    without visited set: still expanding after 20000 states (2-cycle A<->B)
+    [ok]   K3 the defective version still passes Test A
+    the defective version answers the SOLVABLE problem correctly (4 actions),
+    which is exactly why Test A alone would not have found it.
+
+==============================================================================
+42 checks passed, 0 failed
+==============================================================================
