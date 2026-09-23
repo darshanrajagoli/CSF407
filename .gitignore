@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+
+# Explainer docs are kept local only, not pushed to GitHub
+Machine Translation Hands-on/explainers/
