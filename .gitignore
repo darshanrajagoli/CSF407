@@ -3,3 +3,9 @@ __pycache__/
 
 # Explainer docs are kept local only, not pushed to GitHub
 Machine Translation Hands-on/explainers/
+
+# Word/Office lock files
+~$*
+
+# Term project: its own git repository (github.com/darshanrajagoli/whospoke)
+project/

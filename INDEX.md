@@ -10,7 +10,9 @@ Comprehensive index and navigation guide for all coursework, lab assignments, pr
 CS F407/
 ├── INDEX.md                                       <- Repository Master Index (This File)
 ├── ai_handout_2026-2027_s1.pdf                    <- Course syllabus & policy handout
-├── Audio_Engineering_AI_Project_Proposal.docx     <- Term project proposal
+├── project/                                       <- Term project "whospoke" (own git repo → github.com/darshanrajagoli/whospoke)
+│   ├── INDEX.md                                   <- Project map (start here)
+│   └── Audio_Engineering_AI_Project_Proposal.docx <- Term project proposal
 │
 ├── Search Hands-on/                               <- Lab: Search and A* Navigation
 │   ├── INDEX.md                                   <- Module index
@@ -148,10 +150,13 @@ python run_prolog.py      # Run Prolog queries and external verification
 
 ---
 
-## 🎙️ 4. Course Project (`Audio_Engineering_AI_Project_Proposal.docx`)
+## 🎙️ 4. Course Project (`project/`)
 
-- **Title**: Advanced Computational Speech Engineering
-- **File**: [Audio_Engineering_AI_Project_Proposal.docx](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Audio_Engineering_AI_Project_Proposal.docx)
+- **Title**: Advanced Computational Speech Engineering — implemented as **whospoke**
+- **Proposal**: [project/Audio_Engineering_AI_Project_Proposal.docx](project/Audio_Engineering_AI_Project_Proposal.docx)
+- **Code, results, docs**: [project/INDEX.md](project/INDEX.md) · [project/README.md](project/README.md) · GitHub: https://github.com/darshanrajagoli/whospoke
+  (the project is its own git repository, so this course repo ignores `project/`)
+- **Status**: Milestones 1–3 built and evaluated for the 6 Oct 2026 mid-semester review; Milestone 4 after the review.
 - **Scope**: Building a multi-stage **"Who Spoke What and When"** speech processing pipeline tailored to spontaneous, noisy, code-switched Indian audio environments.
 - **Core Technical Pillars**:
   1. *Source Separation*: Isolating overlapping speakers using deep generative models.
