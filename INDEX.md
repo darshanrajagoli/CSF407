@@ -1,191 +1,140 @@
-# CS F407: Artificial Intelligence — Repository Master Index
+# CS F407: Artificial Intelligence — Repository Index
 
-Comprehensive index and navigation guide for all coursework, lab assignments, project deliverables, and technical reports in **CS F407 (Artificial Intelligence)**.
-
----
-
-## 🧭 Repository Directory Overview
+Coursework for **CS F407 (Artificial Intelligence)**, one folder per lab.
 
 ```
 CS F407/
-├── INDEX.md                                       <- Repository Master Index (This File)
-├── ai_handout_2026-2027_s1.pdf                    <- Course syllabus & policy handout
-├── project/                                       <- Term project "whospoke" (own git repo → github.com/darshanrajagoli/whospoke)
-│   ├── INDEX.md                                   <- Project map (start here)
-│   └── Audio_Engineering_AI_Project_Proposal.docx <- Term project proposal
+├── INDEX.md                        <- this file
+├── ai_handout_2026-2027_s1.pdf     <- course handout
 │
-├── Search Hands-on/                               <- Lab: Search and A* Navigation
-│   ├── INDEX.md                                   <- Module index
-│   ├── search_lab_ex.pdf                          <- Lab assignment sheet
-│   ├── deliverables/                              <- Final code & reports (for submission)
-│   │   ├── astar_warehouse.py                     <- A* & BFS agent implementation
-│   │   ├── test_search.py                         <- Unit test suite (20 checks)
-│   │   ├── experiments.py                         <- Benchmark comparisons & heuristic tests
-│   │   ├── LAB_REPORT.md                          <- Comprehensive 9-section lab report
-│   │   ├── task0_1_formulation_and_design.md      <- Problem formulation & pre-LLM design
-│   │   ├── prompts.md                             <- Appendix of LLM engineering prompts
-│   │   ├── results.txt                            <- Output of BFS vs A* & heuristic sweeps
-│   │   ├── test_results.txt                       <- Raw output of test suite
-│   │   └── warehouse.txt                          <- ASCII map of warehouse
-│   └── explainers/                                <- Conceptual deep-dive notes
-│       ├── explainer.pdf                          <- 10-page standalone guide
-│       └── explainer.tex                          <- LaTeX source
-│
-├── Logic Hands-on/                                <- Lab: Logical Planning & Prolog Verifier
-│   ├── INDEX.md                                   <- Module index
-│   ├── logic_lab_ex.pdf                           <- Lab assignment sheet
-│   ├── deliverables/                              <- Final code & reports (for submission)
-│   │   ├── planner.py                             <- Propositional BFS planning agent
-│   │   ├── test_planner.py                        <- Unit test suite (42 checks)
-│   │   ├── experiments.py                         <- State-space analysis & defect sweeps
-│   │   ├── planner.pl                             <- Declarative warehouse domain facts & rules
-│   │   ├── reasoning.pl                           <- Classical Horn-clause inference rules
-│   │   ├── prolog_engine.py                       <- SLD-resolution inference engine
-│   │   ├── run_prolog.py                          <- Prolog query runner & verifier loop
-│   │   ├── LAB_REPORT.md                          <- Comprehensive 10-section lab report
-│   │   ├── task0_1_specification_and_plan.md      <- Task 0-1 specs & hand-built plan
-│   │   ├── prompts.md                             <- Appendix of LLM engineering prompts
-│   │   ├── planner_output.txt                     <- Planner run output & trajectory
-│   │   ├── test_results.txt                       <- Raw output of test suite
-│   │   ├── results.txt                            <- Output of state-space experiments
-│   │   └── prolog_session.txt                     <- Complete Prolog verification transcript
-│   └── explainers/                                <- Conceptual deep-dive notes
-│       ├── explainer.pdf                          <- 11-page standalone guide
-│       └── explainer.tex                          <- LaTeX source
-│
-└── Labs/                                          <- Staging directory for new laboratory work
-    └── Lab_2026-09-16/                            <- Workspace for today's lab session
+├── Search Hands-on/                <- Lab 1: Search and A*
+├── Logic Hands-on/                 <- Lab 2: Logical reasoning for planning (+ Prolog)
+├── Machine Translation Hands-on/   <- Lab 3: Transformer architectures
+└── Bayesian Networks Hands-on/     <- Lab 4: Bayesian networks and autoregressive language models
+```
+
+Every lab folder has the same layout:
+
+```
+<Lab>/
+├── INDEX.md          <- start here: what the lab asks for and where each answer is
+├── *_lab_ex.pdf      <- the handout (Lab 3 has none)
+├── deliverables/     <- what gets submitted (on GitHub)
+└── explainers/       <- plain-English study notes (LOCAL ONLY, git-ignored, not on GitHub)
+```
+
+> **Explainers are local only.** Every `explainers/` folder is git-ignored and
+> is not on GitHub.
+
+---
+
+## Course information
+
+- **Course:** CS F407 Artificial Intelligence (3 credits)
+- **Instructors:** Dr. Tirtharaj Dash (CC-107), Prof. Ashwin Srinivasan (D-167)
+- **Handout:** [ai_handout_2026-2027_s1.pdf](ai_handout_2026-2027_s1.pdf)
+- **Evaluation:** Lab work (best k of N) 20 · Comprehensive exam 30 ·
+  Course project 30 · Paper reading 10 · Tutorial participation 10
+
+---
+
+## Lab 1 — Search and A\* ([`Search Hands-on/`](Search%20Hands-on/INDEX.md))
+
+A warehouse robot finding its way around a 64-cell grid: problem formulation,
+A\* vs BFS, and heuristic design, with an LLM writing the code.
+
+| | |
+|---|---|
+| Handout | [search_lab_ex.pdf](Search%20Hands-on/search_lab_ex.pdf) |
+| Main report | [LAB_REPORT.md](Search%20Hands-on/deliverables/LAB_REPORT.md) |
+| Code | `astar_warehouse.py` · `test_search.py` (20 checks) · `experiments.py` |
+| Explainer (local) | `explainers/explainer.pdf` — 10 pages from first principles |
+
+**Key findings:** The optimal path is 40 moves. On a unit-cost grid, when
+f-values tie, FIFO tie-breaking makes A\* expand as much as BFS; preferring the
+deeper node cuts expansions from 116 to 26. The inadmissible heuristic
+2×Manhattan gives a 30-move path where 28 is optimal.
+
+```bash
+cd "Search Hands-on/deliverables" && python test_search.py && python experiments.py
 ```
 
 ---
 
-## 📚 1. Course Information
+## Lab 2 — Logical Reasoning for Planning ([`Logic Hands-on/`](Logic%20Hands-on/INDEX.md))
 
-- **Course**: CS F407 Artificial Intelligence (3 Credits)
-- **Instructors**: Dr. Tirtharaj Dash (CC-107) and Prof. Ashwin Srinivasan (D-167)
-- **Handout**: [ai_handout_2026-2027_s1.pdf](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/ai_handout_2026-2027_s1.pdf)
-- **Evaluation Components**:
-  - Worksheets / Lab Work (best $k$-of-$N$): **20 marks**
-  - Comprehensive Exam: **30 marks**
-  - Course Project: **30 marks**
-  - Paper Reading: **10 marks**
-  - Tutorial Participation: **10 marks**
+Logic + search = planning: a propositional planner for moving a package A → C,
+checked independently by Prolog.
 
----
+| | |
+|---|---|
+| Handout | [logic_lab_ex.pdf](Logic%20Hands-on/logic_lab_ex.pdf) |
+| Main report | [LAB_REPORT.md](Logic%20Hands-on/deliverables/LAB_REPORT.md) |
+| Code | `planner.py` · `test_planner.py` (42 checks) · `experiments.py` · `planner.pl` · `reasoning.pl` · `prolog_engine.py` · `run_prolog.py` |
+| Explainer (local) | `explainers/explainer.pdf` — 11 pages from first principles |
 
-## 🔍 2. Search Hands-on (`Search Hands-on/`)
+**Key findings:** The optimal plan has 4 actions: PickUp → Move(A,B) → Move(B,C) →
+Drop. The `visited` set is needed for the planner to terminate, not just to make
+it faster. An LLM-generated `Move(A,C)` passed every Python check and was only
+caught by the independent Prolog knowledge base.
 
-Explores **state-space search, heuristic design, and LLM-assisted code engineering** on a 64-cell warehouse grid obstacle domain.
-
-- **Assignment Handout**: [search_lab_ex.pdf](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/search_lab_ex.pdf)
-- **Module Index**: [INDEX.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/INDEX.md)
-- **Status**: **100% Completed & Verified (20/20 checks passed)**
-
-### Deliverables Breakdown
-
-| Deliverable | Description | File Link |
-|---|---|---|
-| **Main Lab Report** | Complete 9-section report covering Tasks 0–7 and Final Reflections | [LAB_REPORT.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/LAB_REPORT.md) |
-| **Pre-LLM Design** | Formal formulation $P=(S,A,T,s_0,G,c)$ and agent architecture | [task0_1_formulation_and_design.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/task0_1_formulation_and_design.md) |
-| **A\* Agent** | Python implementation of A\* with tie-breaking, lazy deletion, and BFS | [astar_warehouse.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/astar_warehouse.py) |
-| **Test Suite** | Unit tests covering original map, edge cases, disconnected goals, and detours | [test_search.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/test_search.py) |
-| **Benchmarks** | Empirical comparisons across BFS and 4 heuristics ($h=0$, Manhattan, Euclidean, $2\times\text{Manhattan}$) | [experiments.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/experiments.py) |
-| **Prompt Log** | Verbatim prompts submitted to the LLM assistant | [prompts.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/prompts.md) |
-| **Test Results** | Verified output logs from test executions | [test_results.txt](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/test_results.txt) |
-| **Experiment Results** | Raw tabular output from algorithm sweeps | [results.txt](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/deliverables/results.txt) |
-| **Study Guide** | Standalone 10-page tutorial document | [explainer.pdf](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Search%20Hands-on/explainers/explainer.pdf) |
-
-### Key Findings & Insights
-1. **Warehouse Solution**: The optimal path requires **40 moves** (all 64 free cells must be expanded because the warehouse map acts as a single constrained corridor).
-2. **The FIFO Tie-Break Trap**: When $f(n)$ ties on a unit-cost grid, FIFO queue ordering reduces A\* to BFS (116 expansions on open grids). Adding a prefer-deeper tie-break ($\max g$) cuts expansions from **116 to 26** without losing optimality.
-3. **Inadmissible Heuristics**: $2 \times \text{Manhattan}$ speeds up search on simple maps, but in cluttered environments it sacrifices optimality, yielding a suboptimal path (30 moves vs. optimal 28 moves).
-
-### How to Run
-```powershell
-cd "Search Hands-on\deliverables"
-python astar_warehouse.py    # Run A* on the warehouse map
-python test_search.py        # Run test suite (20 tests)
-python experiments.py        # Run BFS vs A* comparisons
+```bash
+cd "Logic Hands-on/deliverables" && python test_planner.py && python run_prolog.py
 ```
 
 ---
 
-## 🧠 3. Logic Hands-on (`Logic Hands-on/`)
+## Lab 3 — Transformer Architectures ([`Machine Translation Hands-on/`](Machine%20Translation%20Hands-on/INDEX.md))
 
-Demonstrates the foundational principle: **Logic + Search = Planning**, integrating propositional domain modeling, BFS state-space search, and independent formal verification using Prolog.
+One notebook with one small demo per transformer shape: encoder-decoder
+(translation, M2M100), decoder-only (generation, GPT-2) and encoder-only
+(sentiment, DistilBERT).
 
-- **Assignment Handout**: [logic_lab_ex.pdf](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/logic_lab_ex.pdf)
-- **Module Index**: [INDEX.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/INDEX.md)
-- **Status**: **100% Completed & Verified (42/42 checks passed)**
+| | |
+|---|---|
+| Notebook | [transformer_architectures_demo.ipynb](Machine%20Translation%20Hands-on/deliverables/transformer_architectures_demo.ipynb) |
+| Explainer (local) | `explainers/explainer.md` — the notebook explained for a complete beginner |
 
-### Deliverables Breakdown
+---
 
-| Deliverable | Description | File Link |
-|---|---|---|
-| **Main Lab Report** | Complete 10-section report covering Tasks 0–8, §5 Reflections, and §7.2 Prolog Reflections | [LAB_REPORT.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/LAB_REPORT.md) |
-| **Specification & Plan** | Formal propositional preconditions/effects and manual step-by-step state trace | [task0_1_specification_and_plan.md](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/task0_1_specification_and_plan.md) |
-| **Planning Agent** | BFS planner with propositional states, duplicate detection, and execution verifier | [planner.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/planner.py) |
-| **Test Suite** | Unit tests covering solvable problems, impossible goals, irrelevant actions, and cycle traps | [test_planner.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/test_planner.py) |
-| **Experiments** | Reachable state-space analysis and demonstration of the three modeling defects | [experiments.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/experiments.py) |
-| **Prolog Domain Model** | Independent warehouse connectivity facts and `can_move/2`, `valid_move/2` rules | [planner.pl](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/planner.pl) |
-| **Prolog Reasoning Rules** | Horn clauses demonstrating classical modus ponens chains | [reasoning.pl](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/reasoning.pl) |
-| **SLD Engine** | Pure-Python resolution engine enabling Prolog queries without third-party installs | [prolog_engine.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/prolog_engine.py) |
-| **Verifier Session** | Python-to-Prolog translation and plan verification loop | [run_prolog.py](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/deliverables/run_prolog.py) |
-| **Study Guide** | Standalone 11-page tutorial document | [explainer.pdf](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Logic%20Hands-on/explainers/explainer.pdf) |
+## Lab 4 — Bayesian Networks and Autoregressive LMs ([`Bayesian Networks Hands-on/`](Bayesian%20Networks%20Hands-on/INDEX.md))
 
-### Key Findings & Insights
-1. **Optimal Plan**: Exactly 4 actions:
-   $$\text{PickUp}(Package, A) \to \text{Move}(A, B) \to \text{Move}(B, C) \to \text{Drop}(Package, C)$$
-2. **Precondition Checks**: If preconditions are ignored, the robot moves to B and tries to pick up a package still at A, producing invalid states where the package is in two locations simultaneously.
-3. **Internal vs. External Verification**: An LLM will convincingly explain that an invalid plan (e.g. `Move(A,C)`) is valid because it evaluates the plan against an unconstrained action model. The Prolog verifier catches this because it checks the plan against an independent, ground-truth knowledge base.
+A first-order and a second-order n-gram language model built from six sentences,
+seen as Bayesian networks: CPTs from counts, greedy vs sampled generation, and
+the cost of more context.
 
-### How to Run
-```powershell
-cd "Logic Hands-on\deliverables"
-python planner.py         # Solve the warehouse planning problem
-python test_planner.py    # Run test suite (42 tests)
-python experiments.py     # Run state-space and defect benchmarks
-python run_prolog.py      # Run Prolog queries and external verification
+| | |
+|---|---|
+| Handout | [bn_lab_ex.pdf](Bayesian%20Networks%20Hands-on/bn_lab_ex.pdf) |
+| Main report | [LAB_REPORT.md](Bayesian%20Networks%20Hands-on/deliverables/LAB_REPORT.md) — Q1–Q14 plus the reflection |
+| Code | `bigram_model.py` · `trigram_model.py` · `run_lab.py` · `test_models.py` (26 checks) |
+| Prompts | [prompts.md](Bayesian%20Networks%20Hands-on/deliverables/prompts.md) |
+| Explainers (local) | `explainers/explainer.md` (from zero to the whole picture, with notes boxes) · `explainers/code_walkthrough.md` |
+
+**Key findings:** Greedy decoding loops forever (the → cat → sat → on → the …),
+and the LLM's first version hung. A second word of context makes predictions
+sharper, but 96 of 111 contexts have no data, and the model can only repeat its
+six training sentences. Normalisation and chain-rule tests catch bugs that the
+generated text hides.
+
+```bash
+cd "Bayesian Networks Hands-on/deliverables" && python test_models.py && python run_lab.py
 ```
 
 ---
 
-## 🎙️ 4. Course Project (`project/`)
+## Term project
 
-- **Title**: Advanced Computational Speech Engineering — implemented as **whospoke**
-- **Proposal**: [project/Audio_Engineering_AI_Project_Proposal.docx](project/Audio_Engineering_AI_Project_Proposal.docx)
-- **Code, results, docs**: [project/INDEX.md](project/INDEX.md) · [project/README.md](project/README.md) · GitHub: https://github.com/darshanrajagoli/whospoke
-  (the project is its own git repository, so this course repo ignores `project/`)
-- **Status**: Milestones 1–3 built and evaluated for the 6 Oct 2026 mid-semester review; Milestone 4 after the review.
-- **Scope**: Building a multi-stage **"Who Spoke What and When"** speech processing pipeline tailored to spontaneous, noisy, code-switched Indian audio environments.
-- **Core Technical Pillars**:
-  1. *Source Separation*: Isolating overlapping speakers using deep generative models.
-  2. *Speaker Diarization*: Unsupervised clustering on localized speaker embeddings.
-  3. *Regional ASR*: Low-resource automatic speech recognition for multilingual and code-switched speech.
-  4. *LLM Post-Processing*: Transcript cleaning, syntactic structuring, and semantic summarization.
+The term project (whospoke) lives in its own repository, not here:
+https://github.com/darshanrajagoli/whospoke
 
 ---
 
-## 🧪 5. Labs Staging (`Labs/`)
+## Run every test
 
-Dedicated directory for incoming laboratory assignments and worksheets.
-
-- **Today's Lab Workspace**: [Lab_2026-09-16](file:///c:/Users/darsh/OneDrive/Desktop/CS%20F407/Labs/Lab_2026-09-16)
-- Ready for receiving prompt sheets, starter codes, or test data.
-
----
-
-## ⚡ Quick Verification Command Summary
-
-Run all test suites across the repository with a single PowerShell snippet:
-
-```powershell
-# Verify Search Lab
-python "Search Hands-on\deliverables\test_search.py"
-
-# Verify Logic Lab
-python "Logic Hands-on\deliverables\test_planner.py"
-
-# Verify Prolog Logical Verifier
-python "Logic Hands-on\deliverables\run_prolog.py"
+```bash
+python "Search Hands-on/deliverables/test_search.py"
+python "Logic Hands-on/deliverables/test_planner.py"
+python "Logic Hands-on/deliverables/run_prolog.py"
+python "Bayesian Networks Hands-on/deliverables/test_models.py"
 ```

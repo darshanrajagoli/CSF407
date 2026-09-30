@@ -1,0 +1,38 @@
+First-order model, 20 sampled sentences (seed 1)
+
+the park
+the rug
+the dog sat on the rug
+the rug
+the park
+the cat sat on the cat sat on the rug
+the cat sat on the cat ran to the cat ran to the mat
+the park
+the dog sat on the park
+the cat sat on the cat sat on the mat
+the dog sat on the cat sat on the dog sat on the park
+the park
+the park
+the mat
+the cat ran to the dog ran to the rug
+the rug
+the rug
+the rug
+the rug
+the cat sat on the dog ran to the dog sat on the dog sat on the mat
+
+Greedy (Mode A), 5 sentences
+
+the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on
+the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on
+the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on
+the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on
+the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on
+
+Sampling (Mode B), 5 sentences (seed 2)
+
+the park
+the park
+the mat
+the rug
+the mat

@@ -1,0 +1,31 @@
+First-order model  P(X_t | X_{t-1})
+  PASS  tokenise adds <START> and <END> and lower-cases
+  PASS  counts: C(the, cat) = 3, C(sat, on) = 4
+  PASS  42 transitions counted in total (6 sentences x 7)
+  PASS  P(cat | the) = 3/12 and P(park | the) = 2/12
+  PASS  handout's own example: 'the cat' x3, 'the dog' x2 gives 3/5 and 2/5
+  PASS  NORMALISATION: every row sums to 1
+  PASS  every probability is between 0 and 1
+  PASS  zero-probability transition: P(sat | the) = 0
+  PASS  <END> is never a context (nothing comes after the end)
+  PASS  unseen word: empty distribution and predict() = None, no crash
+  PASS  greedy picks the argmax: predict(cat) = sat, predict(ran) = to
+  PASS  greedy is deterministic
+  PASS  greedy stops at the 20-word cap instead of looping forever
+  PASS  every sampled sentence has probability > 0 under the model
+  PASS  SAMPLING follows the CPT: frequencies after 'the' within 0.01 of P(. | the)
+  PASS  chain rule: share of 'the park' in samples matches P = 1 x 2/12 x 1 = 0.167
+  PASS  the normalisation test CATCHES a broken table (a row summing to 0.833)
+
+Second-order model  P(X_t | X_{t-2}, X_{t-1})
+  PASS  tokenise2 pads with two <START> tokens
+  PASS  NORMALISATION: every row sums to 1
+  PASS  P(X1) is stored as P(the | <START>, <START>) = 1
+  PASS  P(cat | <START>, the) = 3/6
+  PASS  P(mat | on, the) = 2/4 and P(park | to, the) = 2/2
+  PASS  more context changes the prediction: P(mat | on, the) = 0.5 but P(mat | the) = 0.167
+  PASS  unseen pair (the, the): empty distribution and predict() = None
+  PASS  greedy reaches <END>: 'the cat sat on the mat'
+  PASS  with this tiny corpus every sampled sentence is a training sentence
+
+26 passed, 0 failed

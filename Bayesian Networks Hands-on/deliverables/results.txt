@@ -1,0 +1,206 @@
+========================================================================
+PART III - dataset (lower-cased, one word = one token)
+========================================================================
+  <START> the cat sat on the mat <END>
+  <START> the cat sat on the rug <END>
+  <START> the dog sat on the mat <END>
+  <START> the dog ran to the park <END>
+  <START> the cat ran to the park <END>
+  <START> the dog sat on the rug <END>
+
+  vocabulary (10 words): cat, dog, mat, on, park, ran, rug, sat, the, to
+
+========================================================================
+PART IV / Q3 - first-order CPT  P(next | current)
+========================================================================
+  rows = current word, columns = next word, cells = count/row total
+              cat    dog    mat     on   park    ran    rug    sat    the     to  <END>
+  <START>       0      0      0      0      0      0      0      0    6/6      0      0
+  cat           0      0      0      0      0    1/3      0    2/3      0      0      0
+  dog           0      0      0      0      0    1/3      0    2/3      0      0      0
+  mat           0      0      0      0      0      0      0      0      0      0    2/2
+  on            0      0      0      0      0      0      0      0    4/4      0      0
+  park          0      0      0      0      0      0      0      0      0      0    2/2
+  ran           0      0      0      0      0      0      0      0      0    2/2      0
+  rug           0      0      0      0      0      0      0      0      0      0    2/2
+  sat           0      0      0    4/4      0      0      0      0      0      0      0
+  the        3/12   3/12   2/12      0   2/12      0   2/12      0      0      0      0
+  to            0      0      0      0      0      0      0      0    2/2      0      0
+
+  Q3 contexts in detail (and their zero-probability transitions):
+
+  P(next | the):
+    P(cat  | the) = 3/12 = 0.250
+    P(dog  | the) = 3/12 = 0.250
+    P(mat  | the) = 2/12 = 0.167
+    P(rug  | the) = 2/12 = 0.167
+    P(park | the) = 2/12 = 0.167
+    zero probability (6): on, ran, sat, the, to, <END>
+
+  P(next | cat):
+    P(sat  | cat) = 2/3 = 0.667
+    P(ran  | cat) = 1/3 = 0.333
+    zero probability (9): cat, dog, mat, on, park, rug, the, to, <END>
+
+  P(next | dog):
+    P(sat  | dog) = 2/3 = 0.667
+    P(ran  | dog) = 1/3 = 0.333
+    zero probability (9): cat, dog, mat, on, park, rug, the, to, <END>
+
+  P(next | sat):
+    P(on   | sat) = 4/4 = 1.000
+    zero probability (10): cat, dog, mat, park, ran, rug, sat, the, to, <END>
+
+  P(next | ran):
+    P(to   | ran) = 2/2 = 1.000
+    zero probability (10): cat, dog, mat, on, park, ran, rug, sat, the, <END>
+
+  whole table: 11 x 11 = 121 cells, 17 non-zero, 104 zero
+
+========================================================================
+PART VII - normalisation test, first-order model
+========================================================================
+  <START>                      sum = 1.000000  OK
+  the                          sum = 1.000000  OK
+  cat                          sum = 1.000000  OK
+  sat                          sum = 1.000000  OK
+  on                           sum = 1.000000  OK
+  mat                          sum = 1.000000  OK
+  rug                          sum = 1.000000  OK
+  dog                          sum = 1.000000  OK
+  ran                          sum = 1.000000  OK
+  to                           sum = 1.000000  OK
+  park                         sum = 1.000000  OK
+  -> all rows sum to 1
+
+========================================================================
+PART VIII / Q9 - next-word prediction, argmax_w P(w | context)
+========================================================================
+  <START>  -> the    [the:1.000]
+  the      -> cat    [cat:0.250, dog:0.250, mat:0.167, rug:0.167, park:0.167]   (tie between cat and dog)
+  cat      -> sat    [sat:0.667, ran:0.333]
+  dog      -> sat    [sat:0.667, ran:0.333]
+  sat      -> on     [on:1.000]
+  ran      -> to     [to:1.000]
+  on       -> the    [the:1.000]
+  to       -> the    [the:1.000]
+  mat      -> <END>  [<END>:1.000]
+  bird     -> None   (unseen word: no row in the CPT)
+
+========================================================================
+PART IX - 20 sentences sampled from the first-order model (seed 1)
+========================================================================
+   1. the park   <- not in training data
+   2. the rug   <- not in training data
+   3. the dog sat on the rug
+   4. the rug   <- not in training data
+   5. the park   <- not in training data
+   6. the cat sat on the cat sat on the rug   <- not in training data
+   7. the cat sat on the cat ran to the cat ran to the mat   <- not in training data
+   8. the park   <- not in training data
+   9. the dog sat on the park   <- not in training data
+  10. the cat sat on the cat sat on the mat   <- not in training data
+  11. the dog sat on the cat sat on the dog sat on the park   <- not in training data
+  12. the park   <- not in training data
+  13. the park   <- not in training data
+  14. the mat   <- not in training data
+  15. the cat ran to the dog ran to the rug   <- not in training data
+  16. the rug   <- not in training data
+  17. the rug   <- not in training data
+  18. the rug   <- not in training data
+  19. the rug   <- not in training data
+  20. the cat sat on the dog ran to the dog sat on the dog sat on the mat   <- not in training data
+
+  distinct: 11/20, not in training data: 19/20
+
+========================================================================
+PART X / Q10 - greedy vs sampling, five sentences each
+========================================================================
+  Mode A, greedy (argmax every step):
+    the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on   [cut off at the 20-word cap - never reached <END>]
+    the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on   [cut off at the 20-word cap - never reached <END>]
+    the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on   [cut off at the 20-word cap - never reached <END>]
+    the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on   [cut off at the 20-word cap - never reached <END>]
+    the cat sat on the cat sat on the cat sat on the cat sat on the cat sat on   [cut off at the 20-word cap - never reached <END>]
+  Mode B, sampling:
+    the park
+    the park
+    the mat
+    the rug
+    the mat
+
+  distinct sentences: greedy 1/5, sampling 3/5
+
+========================================================================
+PART XI-XII - second-order CPT  P(next | two previous words)
+========================================================================
+  (<START>, <START>)      -> the 6/6
+  (<START>, the)          -> cat 3/6, dog 3/6
+  (cat, ran)              -> to 1/1
+  (cat, sat)              -> on 2/2
+  (dog, ran)              -> to 1/1
+  (dog, sat)              -> on 2/2
+  (on, the)               -> mat 2/4, rug 2/4
+  (ran, to)               -> the 2/2
+  (sat, on)               -> the 4/4
+  (the, cat)              -> sat 2/3, ran 1/3
+  (the, dog)              -> sat 2/3, ran 1/3
+  (the, mat)              -> <END> 2/2
+  (the, park)             -> <END> 2/2
+  (the, rug)              -> <END> 2/2
+  (to, the)               -> park 2/2
+
+========================================================================
+PART VII (again) - normalisation test, second-order model
+========================================================================
+  ('<START>', '<START>')       sum = 1.000000  OK
+  ('<START>', 'the')           sum = 1.000000  OK
+  ('the', 'cat')               sum = 1.000000  OK
+  ('cat', 'sat')               sum = 1.000000  OK
+  ('sat', 'on')                sum = 1.000000  OK
+  ('on', 'the')                sum = 1.000000  OK
+  ('the', 'mat')               sum = 1.000000  OK
+  ('the', 'rug')               sum = 1.000000  OK
+  ('the', 'dog')               sum = 1.000000  OK
+  ('dog', 'sat')               sum = 1.000000  OK
+  ('dog', 'ran')               sum = 1.000000  OK
+  ('ran', 'to')                sum = 1.000000  OK
+  ('to', 'the')                sum = 1.000000  OK
+  ('the', 'park')              sum = 1.000000  OK
+  ('cat', 'ran')               sum = 1.000000  OK
+  -> all rows sum to 1
+
+  second-order, greedy: the cat sat on the mat
+  second-order, 5 samples:
+    the dog sat on the mat
+    the cat sat on the rug
+    the cat sat on the rug
+    the dog sat on the rug
+    the dog ran to the park
+
+========================================================================
+PART XIII / Q12 - comparing the two models
+========================================================================
+                                             first-order  second-order
+  possible contexts                                   11           111
+  CPT cells (contexts x 11 outcomes)                 121          1221
+  free parameters (contexts x 10)                    110          1110
+  non-zero probabilities actually learned             17            19
+  contexts seen in training                           11            15
+  zero-probability (never seen) contexts               0            96
+  training events (transitions counted)               42            42
+
+  diversity over 1000 samples:
+    first-order   distinct sentences:  177   novel (not in training):  886/1000   distinct novel: 171
+    second-order  distinct sentences:    6   novel (not in training):    0/1000   distinct novel: 0
+
+  coherence - first-order sentences that are NOT in the training data (most common first):
+     192 x  the park
+     161 x  the mat
+     159 x  the rug
+      33 x  the dog sat on the park
+      27 x  the cat sat on the park
+      19 x  the cat ran to the mat
+      15 x  the dog ran to the mat
+      14 x  the cat ran to the rug
+  coherence - second-order: every sampled sentence is one of the six training sentences: True

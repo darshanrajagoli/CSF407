@@ -10,7 +10,7 @@ process.
 ├── search_lab_ex.pdf        <- the original lab handout
 │
 ├── deliverables/            <- SUBMIT THIS
-└── explainers/              <- for understanding only, do not submit
+└── explainers/              <- for understanding only, do not submit (LOCAL ONLY, git-ignored)
 ```
 
 ---
@@ -62,6 +62,9 @@ No libraries needed beyond the Python standard library.
 
 ## `explainers/` — for understanding, not for submission
 
+> **Local only.** This folder is git-ignored. It stays on this computer and is
+> not on GitHub.
+
 | File | What it is |
 |---|---|
 | `explainer.pdf` | **Read this.** 10 pages, everything from first principles. |
@@ -86,7 +89,7 @@ essentially one long corridor.
 **2. The first working A\* was secretly BFS.** It passed all 20 tests and
 returned optimal paths, while expanding 116 of 130 cells on an open test map —
 *identical* to BFS, same peak frontier. Cause: on a unit-cost grid, Manhattan
-makes `f = g + h` constant along every sensible route (all 130 cells had `f = 25`),
+makes `f = g + h` constant along every sensible route (all 116 reachable cells had `f = 25`),
 so the tie-break rule alone decided the order — and FIFO order *is* BFS order.
 Breaking ties toward larger `g` fixed it: **116 → 26 expansions**, same 25-move
 path. No test caught this; only an implausible *number* did.

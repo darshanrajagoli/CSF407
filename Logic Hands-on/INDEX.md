@@ -11,7 +11,7 @@ independent verifier of the result.
 ├── logic_lab_ex.pdf         <- the original lab handout
 │
 ├── deliverables/            <- SUBMIT THIS
-└── explainers/              <- for understanding only, do not submit
+└── explainers/              <- for understanding only, do not submit (LOCAL ONLY, git-ignored)
 ```
 
 ---
@@ -76,6 +76,9 @@ each.
 ---
 
 ## `explainers/` — for understanding, not for submission
+
+> **Local only.** This folder is git-ignored. It stays on this computer and is
+> not on GitHub.
 
 | File | What it is |
 |---|---|

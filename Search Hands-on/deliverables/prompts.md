@@ -75,7 +75,8 @@ outcome of that review is recorded in Task 7.
 **Answer given:** the heuristic is not being ignored — it is being cancelled out
 by ties. On a 4-connected grid with unit step costs, every cell on a detour-free
 route from `S` to `G` has `g + h = h(s0)` exactly, so `f` is *constant* across the
-whole map. I verified this directly: all 130 free cells on that map have `f = 25`.
+whole map. I verified this directly: all 116 reachable cells on that map have `f = 25`
+(the other 14 free cells are sealed inside the block).
 With `f` tied everywhere, the ordering is decided entirely by the tie-break, and a
 FIFO tie-break visits nodes in insertion order — which is exactly BFS order.
 The fix is to break `f`-ties in favour of the **larger** `g`, i.e. push

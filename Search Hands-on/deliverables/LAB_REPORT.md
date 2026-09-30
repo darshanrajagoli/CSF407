@@ -323,8 +323,8 @@ the unsolvable map. All 20 tests passed on the first run.
 **2. Did I find any bugs or design problems?** Yes — one significant, and it
 passed every test. **A\* with a FIFO tie-break expanded exactly as many states as
 BFS: 116 of 130.** On a 4-connected unit-cost grid, every cell on a detour-free
-route satisfies `g + h = h(s₀)`, so `f` is *constant*; I confirmed that all 130
-free cells on the control map have `f = 25`. When everything ties on `f`, the
+route satisfies `g + h = h(s₀)`, so `f` is *constant*; I confirmed that all 116
+reachable cells on the control map have `f = 25`. When everything ties on `f`, the
 ordering is decided entirely by the tie-break, and FIFO order is precisely BFS
 order. The heuristic was computed correctly and then thrown away.
 
