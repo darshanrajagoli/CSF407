@@ -104,8 +104,9 @@ peak frontier    : 3
 #################
 ```
 
-The route is forced: 4 moves right, 4 down, 8 right, 2 up, 6 left, 2 up, 8 right,
-6 down = **40 moves**.
+The shortest route is unique: 4 moves right, 4 down, 8 right, 2 up, 6 left, 2 up,
+8 right, 6 down = **40 moves**. (The only other route, round the bottom corridor
+to rejoin at (5, 13), is 48 moves.)
 
 ---
 
@@ -280,9 +281,9 @@ costs that is BFS by another name: it still returns an optimal path, but expands
 the most states of any variant (116 and 142 on the two larger maps). `f = g`
 carries no information about where the goal is.
 
-**2. What happens with Euclidean distance?** Still admissible — it can never
-exceed Manhattan when diagonal movement is unavailable — so the path stays
-optimal. But it is a *weaker* lower bound, so it discriminates less between
+**2. What happens with Euclidean distance?** Still admissible — straight-line
+distance never exceeds Manhattan, which is itself admissible here — so the path
+stays optimal. But it is a *weaker* lower bound, so it discriminates less between
 states and expands substantially more of them: 92 against Manhattan's 26 on the
 control map. Being admissible is necessary for the guarantee; being *close* to
 `h*` is what makes the search efficient. The two are separate properties.
@@ -345,8 +346,9 @@ The instrumentation I had designed for a different purpose (`nodes_generated`,
 why stale heap entries are left in place and filtered on pop, instead of being
 removed. The reason is that `heapq` has no decrease-key operation, so pushing a
 duplicate and ignoring the obsolete one later is cheaper than finding and
-repairing the existing entry. It also explains why *generated* exceeds
-*expanded*, which I would otherwise have read as a bug.
+repairing the existing entry. It also explains one reason *generated* can exceed
+*expanded* (the other is states still waiting in the frontier when the goal is
+popped), which I would otherwise have read as a bug.
 
 **5. Did I modify the code?** Yes:
 - Added the `tie_break` parameter and made `"deep"` (prefer larger `g`) the
@@ -359,11 +361,11 @@ repairing the existing entry. It also explains why *generated* exceeds
 - Added tests 5 and 6 (no wall border, ragged rows) to test claims my design made
   but nothing exercised.
 
-**6. Which tests were most useful?** Test 4 (alternative paths), because it is the
-only one where a wrong answer is still a *valid* path — every other test can be
-passed by accident, but returning the 10-move detour instead of the 6-move route
-cannot. And more useful than any single test: recording the expected numbers
-*before* running, which is what turned "116 expansions" from a result into a
+**6. Which tests were most useful?** Test 4 (alternative paths), because it was
+built so that a wrong answer is still a *valid* path — the tiny maps can be passed
+by accident, but returning the 10-move detour instead of the 6-move route cannot.
+(Test 1 has the same property: its 48-move bottom route is also legal.) And more
+useful than any single test: recording the expected numbers *before* running, which is what turned "116 expansions" from a result into a
 question.
 
 Beyond the six fixed tests, I also fuzzed the final program against an
@@ -412,7 +414,7 @@ would have looked new on each visit and the search would have degenerated into
 enumerating routes. Equally, fixing `path_length` as the number of moves before
 writing anything removed an off-by-one that would otherwise have appeared exactly
 when BFS and A\* were compared. The formulation is also what let me *test*: I knew
-`h(s₀) = 20` was a lower bound and that the forced route was 40 moves before the
+`h(s₀) = 20` was a lower bound and that the shortest route was 40 moves before the
 program ran, so I had expectations to check against rather than output to admire.
 Without a specification, you cannot distinguish a correct program from a plausible
 one — you can only observe that it did something.

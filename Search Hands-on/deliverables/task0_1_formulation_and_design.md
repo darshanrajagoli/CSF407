@@ -138,7 +138,7 @@ maintaining a separate set of obstacle coordinates that could drift out of sync
 with the map.
 
 The raw text is retained so that the final path can be printed overlaid on the
-warehouse, which is far easier to check by eye than a list of twenty-odd
+warehouse, which is far easier to check by eye than a list of dozens of
 coordinate pairs.
 
 One hazard to guard against: if a map file has trailing whitespace stripped, its
@@ -213,7 +213,7 @@ operations.
   unseen or `ng < best_g[state]`, updating `best_g` and `parent` at the same
   time.
 
-A consequence worth anticipating when reporting results: *generated* ≥
+A consequence worth anticipating when reporting results: *generated* can exceed
 *expanded*, and the heap may briefly hold more entries than there are distinct
 states.
 
@@ -288,7 +288,7 @@ afterwards.
 3. With `h = 0`, A* degenerates to uniform-cost search and should expand roughly
    as many states as BFS, while still returning an optimal path.
 4. Euclidean distance is admissible here but weaker than Manhattan (it can never
-   exceed it, since diagonal movement is unavailable), so it should expand
+   exceed it, and Manhattan is itself admissible), so it should expand
    somewhat more states than Manhattan while still returning an optimal path.
 5. `2 × Manhattan` is **not** admissible. It should expand noticeably fewer
    states — and may well return a path longer than optimal. This is the trade-off

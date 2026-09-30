@@ -148,7 +148,7 @@ precondition present, **every** negative precondition absent.
 | `Move(C,B)` | `At(Robot,C)` | **no** | — | — | no |
 | `PickUp(Package,A)` | `At(Robot,A)`, `At(Package,A)` | both yes | `Holding(Package)` | yes | **yes** |
 | `PickUp(Package,B)` | `At(Robot,B)`, `At(Package,B)` | **neither** | `Holding(Package)` | yes | no |
-| `PickUp(Package,C)` | `At(Robot,C)`, `At(Package,C)` | **neither** | — | — | no |
+| `PickUp(Package,C)` | `At(Robot,C)`, `At(Package,C)` | **neither** | `Holding(Package)` | yes | no |
 | `Drop(Package,A)` | `At(Robot,A)`, `Holding(Package)` | **`Holding` missing** | — | — | no |
 | `Drop(Package,B)` | `At(Robot,B)`, `Holding(Package)` | **neither** | — | — | no |
 | `Drop(Package,C)` | `At(Robot,C)`, `Holding(Package)` | **neither** | — | — | no |
@@ -196,8 +196,9 @@ state together**. The bridge between them is an entailment check:
 For the propositional STRIPS representation used here, that entailment check is
 cheap and decidable — it is a subset test on a set of propositions. That is the
 sense in which "logical reasoning" appears in this laboratory: not a theorem
-prover, but a small model-checking step performed once per action per state,
-several hundred times per search.
+prover, but a small model-checking step performed once per action per state
+(70 times when solving this warehouse problem: 7 non-goal states expanded ×
+10 actions).
 
 ---
 
@@ -282,7 +283,7 @@ Yes, and it is worth being able to say why without running anything:
 So the plan is optimal, which is what BFS should return.
 `experiments.py` confirms this by exhaustive search, and
 `test_planner.py::test_i_optimality` asserts it against an independently
-written iterative-deepening oracle.
+written exhaustive depth-limited-search oracle.
 
 ---
 

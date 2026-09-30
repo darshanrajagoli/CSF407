@@ -48,11 +48,11 @@ A\* vs BFS, and heuristic design, with an LLM writing the code.
 | Handout | [search_lab_ex.pdf](Search%20Hands-on/search_lab_ex.pdf) |
 | Main report | [LAB_REPORT.md](Search%20Hands-on/deliverables/LAB_REPORT.md) |
 | Code | `astar_warehouse.py` · `test_search.py` (20 checks) · `experiments.py` |
-| Explainer (local) | `explainers/explainer.pdf` — 10 pages from first principles |
+| Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
 
 **Key findings:** The optimal path is 40 moves. On a unit-cost grid, when
 f-values tie, FIFO tie-breaking makes A\* expand as much as BFS; preferring the
-deeper node cuts expansions from 116 to 26. The inadmissible heuristic
+deeper node cuts expansions from 116 to 26 on an open test map. The inadmissible heuristic
 2×Manhattan gives a 30-move path where 28 is optimal.
 
 ```bash
@@ -71,7 +71,7 @@ checked independently by Prolog.
 | Handout | [logic_lab_ex.pdf](Logic%20Hands-on/logic_lab_ex.pdf) |
 | Main report | [LAB_REPORT.md](Logic%20Hands-on/deliverables/LAB_REPORT.md) |
 | Code | `planner.py` · `test_planner.py` (42 checks) · `experiments.py` · `planner.pl` · `reasoning.pl` · `prolog_engine.py` · `run_prolog.py` |
-| Explainer (local) | `explainers/explainer.pdf` — 11 pages from first principles |
+| Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
 
 **Key findings:** The optimal plan has 4 actions: PickUp → Move(A,B) → Move(B,C) →
 Drop. The `visited` set is needed for the planner to terminate, not just to make
@@ -93,7 +93,7 @@ One notebook with one small demo per transformer shape: encoder-decoder
 | | |
 |---|---|
 | Notebook | [transformer_architectures_demo.ipynb](Machine%20Translation%20Hands-on/deliverables/transformer_architectures_demo.ipynb) |
-| Explainer (local) | `explainers/explainer.md` — the notebook explained for a complete beginner |
+| Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
 
 ---
 

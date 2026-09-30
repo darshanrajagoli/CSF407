@@ -219,7 +219,7 @@ changes neither the plan nor its length (C3, C4).
 | **F** | the handout's suggested ordering is rejected, at step 2, for a missing precondition | 2 |
 | **G** | delete-then-add ordering: a proposition in both lists survives | 2 |
 | **H** | degenerate cases: goal already true → empty plan; no actions → no plan | 2 |
-| **I** | BFS returns a **shortest** plan, confirmed against an independently written iterative-deepening oracle; DFS returns a valid but unguaranteed one | 4 |
+| **I** | BFS returns a **shortest** plan, confirmed against an independently written exhaustive depth-limited-search oracle; DFS returns a valid but unguaranteed one | 4 |
 | **J** | the unsound domain returns a 3-action plan that passes *every internal check* | 4 |
 | **K** | duplicate detection is required for **termination**, and its absence still passes Test A | 3 |
 | | | **42** |
@@ -287,7 +287,7 @@ leaving the logic untouched:
 Both return **valid** plans — because both use the same applicability test.
 Only BFS returns a **shortest** plan, because it explores in order of increasing
 plan length and every action costs 1. DFS happens to match it here only because
-a corridor offers almost no wrong turns; on a branching map it would not.
+a corridor offers almost no wrong turns; on a branching map it need not.
 
 This is the same relationship as in the previous module: BFS, DFS, UCS and A\*
 differ only in the order they take nodes off the frontier. What is new in
@@ -453,7 +453,7 @@ can_move(X,Y) :- connected(X,Y).
 | `?- can_move(b,X).` | `X = a ;  X = c.` |
 | `?- connected(a,c).` | `false.` |
 
-**(a) Why does `can_move(a,b)` succeed?** One resolution step. The goal
+**(a) Why does `can_move(a,b)` succeed?** Two resolution steps. The goal
 `can_move(a,b)` unifies with the head of the rule under {X↦a, Y↦b}, leaving the
 body `connected(a,b)`, which unifies with a fact. The derivation reaches the
 empty goal, so the query succeeds.
@@ -603,7 +603,7 @@ falsity. Classical logic would say *unknown*.
 
 **4. What advantage does an independent verifier provide when the original plan was generated with the help of an LLM?**
 - An LLM generates candidate outputs through probabilistic token prediction; it produces answers that look plausible and sound convincing, but it does not perform strict logical deduction.
-- When asked to justify a flawed plan, an LLM will often generate a persuasive, completely fabricated explanation that asserts invalid actions are valid (as demonstrated in Task 5).
+- When asked to justify a flawed plan, an LLM will produce a persuasive explanation that confirms it. In Task 5 every line of its justification of the `Move(A,C)` plan was true relative to the flawed action model — and the plan was still physically impossible, so the explanation was no evidence of validity.
 - An independent, deterministic logical verifier (like Prolog) provides rigorous truth-checking: it evaluates the plan against non-negotiable formal axioms without conversational bias, prompt susceptibility, or hallucination. This operationalizes the core AI engineering principle: **Generate (LLM / Heuristic Search) $\to$ Independently Verify (Formal Logic).**
 
 ---
@@ -669,7 +669,7 @@ Everything that matters, and the list is specific:
 - that the planner **terminates** on an unsolvable problem — Test B, which is
   the only thing that found Defect 1;
 - that the plan is **shortest** — checked against an independently written
-  iterative-deepening oracle (Test I), not against BFS's own claim;
+  exhaustive depth-limited-search oracle (Test I), not against BFS's own claim;
 - that the **action model matches the warehouse** — and this could not be done
   in Python at all. It required a second, independent statement of the
   connectivity, in `planner.pl`, and a query engine that had never seen the
@@ -701,7 +701,8 @@ return the neighbouring cells. Here the successor function is
 Everything downstream is unchanged: frontier, visited set, parent map, goal
 test on pop, and the fact that BFS returns a shortest solution because every
 step costs 1. `results.txt` §3 swaps BFS for DFS with no change to the logic and
-gets valid-but-not-shortest plans, exactly as in the previous module.
+gets valid plans with no shortest-plan guarantee, exactly as in the previous
+module (on these corridors DFS happens to find plans of the same length).
 
 Two differences are worth naming. The state space is **implicit and vast** —
 here 12 reachable states, but in general exponential in the number of

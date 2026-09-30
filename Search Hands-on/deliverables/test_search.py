@@ -90,7 +90,8 @@ print("=" * 70)
 
 # Test 1 ------------------------------------------------------------------
 # The supplied warehouse.  Expected length derived by hand from the map: the
-# route is forced -- (1,1)->(1,5) 4, down to (5,5) 4, right to (5,13) 8,
+# shortest route is unique (the only other one, round the bottom corridor, is
+# 48 moves) -- (1,1)->(1,5) 4, down to (5,5) 4, right to (5,13) 8,
 # up to (3,13) 2, left to (3,7) 6, up to (1,7) 2, right to (1,15) 8,
 # down to (7,15) 6  =  40 moves.
 run("Test 1: original warehouse", WAREHOUSE_MAP,

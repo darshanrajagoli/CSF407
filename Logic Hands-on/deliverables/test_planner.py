@@ -390,7 +390,7 @@ def _robot_can_reach_c(problem):
 
 
 def _shortest_by_brute_force(problem, limit):
-    """Independent oracle: iterative deepening, written without reference to
+    """Independent oracle: exhaustive depth-limited search, written without reference to
     bfs_plan.  Returns the shortest plan length up to `limit`, or None."""
     def rec(state, depth):
         if problem.satisfies_goal(state):

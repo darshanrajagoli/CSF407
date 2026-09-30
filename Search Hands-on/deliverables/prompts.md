@@ -113,7 +113,7 @@ each move changes `h` by at most 1, which equals the step cost, so
 ever reopening a state.
 >
 > Note the contrast with Euclidean distance, which is also admissible here but
-> strictly weaker: it is the exact cost only if the robot could move diagonally,
-> which it cannot. Being a looser lower bound, it discriminates less between
+> strictly weaker: it is the exact cost only if the robot could move in a
+> straight line in any direction, which it cannot. Being a looser lower bound, it discriminates less between
 > states and therefore expands more of them — which the Task 6 measurements
 > confirm (92 expansions against 26 on the open map).

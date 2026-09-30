@@ -108,7 +108,7 @@ code.
 so the frontier never empties, and BFS without duplicate detection re-expands
 the same states forever. Added a `visited` set.
 
-Two remarks. First, it needed to be *told* about the symptom — Task B is what
+Two remarks. First, it needed to be *told* about the symptom — Test B is what
 found this, not the model. Second, its first phrasing called the visited set
 "an efficiency improvement". It is not: it is a **termination requirement**.
 The comment in `planner.py::bfs_plan` was rewritten by hand to say so.

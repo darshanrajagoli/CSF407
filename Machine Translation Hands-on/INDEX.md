@@ -30,4 +30,4 @@ This folder is git-ignored. It stays on this computer and is not on GitHub.
 
 | File | What it is |
 |---|---|
-| `explainer.md` | The notebook explained line by line for a complete beginner: what a transformer, tokenizer and pipeline are, and why each task needs its shape |
+| `explainer.md` | From zero to the whole picture, with a 📝 Notes box per section: tokens, embeddings, attention, encoder vs decoder, greedy/sampling/beam search (linked to the Bayesian Networks lab), a cell-by-cell walkthrough of each part and the sanity checks, a cheat sheet and likely exam questions |

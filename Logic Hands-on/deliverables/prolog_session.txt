@@ -15,7 +15,7 @@ Knowledge base (planner.pl):
 ?- can_move(a,b).
 true.
    [expected True -- as expected]
-   one resolution step: can_move(a,b) reduces to connected(a,b), which is a fact.
+   two resolution steps: the rule reduces can_move(a,b) to connected(a,b), which then matches a fact.
 
 ?- can_move(a,c).
 false.

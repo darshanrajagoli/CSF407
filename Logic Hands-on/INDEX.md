@@ -45,7 +45,7 @@ covers all seven items. Everything else is the evidence it cites.
 
 | File | What it is |
 |---|---|
-| `LAB_REPORT.md` | **The main document.** Ten sections, one per lab task. |
+| `LAB_REPORT.md` | **The main document.** Ten sections, following the lab tasks in order. |
 | `task0_1_specification_and_plan.md` | Tasks 0 and 1 in full — the pre-LLM specification and the hand-built plan |
 | `planner.py` | The planning agent: propositions, actions, BFS, independent plan validation |
 | `test_planner.py` | Task 3 — Tests A, B, C plus eight more; 42 checks |
@@ -82,19 +82,16 @@ each.
 
 | File | What it is |
 |---|---|
-| `explainer.pdf` | **Read this.** 11 pages, everything from first principles. |
-| `explainer.tex` | LaTeX source, if you want to edit it |
+| `explainer.md` | **Read this.** The whole lab from zero, for someone with no CS background: an opening story, then one idea per section, each ending with a 📝 Notes box, and a one-page cheat sheet with likely exam questions at the end. |
 
-Covers: what a state is and why absence means false · why `frozenset` and not
+Covers: what a proposition and a state are, and why absence means false · why `frozenset` and not
 `set` · preconditions as an entailment check `S ⊨ Pre(a)` · why the effect order
 is specified in advance · why the goal test is `⊆` and never `=` · how the
 action definitions describe a graph nobody builds · **why the `visited` set is
 a termination requirement, not an optimisation** · why the handout's own
 suggested plan is invalid · **the bug no Python test could catch, and why** ·
-Prolog, SLD resolution, and negation as failure · what to remember · likely
-exam questions with answers.
-
-Rebuild with `pdflatex explainer.tex` (run it twice, for the contents page).
+Prolog facts, rules, Horn clauses, modus ponens, unification, SLD resolution and
+negation as failure · what to remember · likely exam questions with answers.
 
 ---
 

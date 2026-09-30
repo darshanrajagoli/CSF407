@@ -44,8 +44,8 @@ def task6(db):
     print("")
 
     ask(db, "can_move(a,b).", expect=True,
-        note="one resolution step: can_move(a,b) reduces to connected(a,b), "
-             "which is a fact.")
+        note="two resolution steps: the rule reduces can_move(a,b) to "
+             "connected(a,b), which then matches a fact.")
     ask(db, "can_move(a,c).", expect=False,
         note="there is no fact connected(a,c) and the rule is not recursive, "
              "so the goal\n   is not derivable.  Under the closed-world "

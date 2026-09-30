@@ -67,24 +67,23 @@ No libraries needed beyond the Python standard library.
 
 | File | What it is |
 |---|---|
-| `explainer.pdf` | **Read this.** 10 pages, everything from first principles. |
-| `explainer.tex` | LaTeX source, if you want to edit it |
+| `explainer.md` | **Read this.** The whole lab from zero, for a complete beginner, with a 📝 Notes box per section. |
 
-Covers: what a search problem is · state vs. node · how BFS/DFS/UCS/Greedy/A\*
-differ · `f = g + h` worked on real cells from this map · what the code actually
-does (heap, closed set, lazy deletion) · **the tie-break bug and why it matters**
-· admissible vs. consistent vs. informative · what happens when you break
-admissibility · what to remember · likely exam questions.
-
-Rebuild the PDF with `pdflatex explainer.tex` (run twice, for the contents page).
+Starts with the whole lab as one story, then one idea per section: the map ·
+the six-part search problem · state vs. node · the search loop · BFS · `f = g + h`
+worked on real cells from this map · what the code actually does (heap, Big-O,
+lazy deletion, goal test on pop, the Task 4 line table) · the tests ·
+**the tie-break bug and why it matters** · why the warehouse shows no benefit ·
+admissible vs. consistent vs. informative · breaking admissibility · the LLM
+lesson · a one-page cheat sheet (terms, key numbers) and likely exam questions.
 
 ---
 
 ## The three results worth knowing
 
 **1. The answer is 40 moves.** `h(s₀) = 20` is a lower bound, so the shelves
-exactly double the ideal distance. The route is forced — the warehouse is
-essentially one long corridor.
+exactly double the ideal distance. The shortest route is unique — the warehouse
+is a corridor loop plus a tail to `G`; the only other route (round the bottom) is 48 moves.
 
 **2. The first working A\* was secretly BFS.** It passed all 20 tests and
 returned optimal paths, while expanding 116 of 130 cells on an open test map —
@@ -95,7 +94,7 @@ Breaking ties toward larger `g` fixed it: **116 → 26 expansions**, same 25-mov
 path. No test caught this; only an implausible *number* did.
 
 **3. Inflating the heuristic trades correctness for speed.** `2 × Manhattan`
-still returned optimal paths on both supplied maps — inadmissibility removes the
+still returned optimal paths on the warehouse and the open test map — inadmissibility removes the
 *guarantee*, it doesn't force a violation. Over 2,754 random maps it returned a
 suboptimal path on **25.9%** of them. On the worked example: 77% fewer expansions,
 path 2 moves too long.
