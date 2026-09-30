@@ -1,8 +1,9 @@
 __pycache__/
 *.pyc
+.pytest_cache/
 
-# Explainer docs are kept local only, not pushed to GitHub
-Machine Translation Hands-on/explainers/
+# Explainer docs are kept local only, not pushed to GitHub (every lab's explainers/ folder)
+explainers/
 
 # Word/Office lock files
 ~$*
