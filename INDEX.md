@@ -10,7 +10,8 @@ CS F407/
 ├── Search Hands-on/                <- Lab 1: Search and A*
 ├── Logic Hands-on/                 <- Lab 2: Logical reasoning for planning (+ Prolog)
 ├── Machine Translation Hands-on/   <- Lab 3: Transformer architectures
-└── Bayesian Networks Hands-on/     <- Lab 4: Bayesian networks and autoregressive language models
+├── Bayesian Networks Hands-on/     <- Lab 4: Bayesian networks and autoregressive language models
+└── Neural Models Hands-on/         <- Lab 5: Neural models (XOR, backprop, activations, softmax)
 ```
 
 Every lab folder has the same layout:
@@ -123,6 +124,33 @@ cd "Bayesian Networks Hands-on/deliverables" && python test_models.py && python 
 
 ---
 
+## Lab 5 — Neural Models ([`Neural Models Hands-on/`](Neural%20Models%20Hands-on/INDEX.md))
+
+A 2–2–1 PyTorch network learns XOR (a "sensors disagree" warning). The lab covers
+why a nonlinear hidden layer is needed, checks backpropagation's gradients,
+shows the symmetry problem, compares sigmoid/tanh/ReLU, and extends the output
+to three classes with softmax.
+
+| | |
+|---|---|
+| Handout | [neur_models_lab_ex.pdf](Neural%20Models%20Hands-on/neur_models_lab_ex.pdf) |
+| Main report | [LAB_REPORT.md](Neural%20Models%20Hands-on/deliverables/LAB_REPORT.md) — Tasks 1–5, all Think About It boxes, reflection Q1–Q7 |
+| Code | `neural_xor.py` (the whole lab in one file, needs PyTorch) |
+| Prompts | [prompts.md](Neural%20Models%20Hands-on/deliverables/prompts.md) — prompts and the LLM's code as generated |
+| Explainers (local) | `explainers/explainer.md` (from zero to the whole picture, with notes boxes) · `explainers/code_walkthrough.md` |
+
+**Key findings:** A hidden layer without a nonlinearity fails exactly like a linear
+model (P = 0.5 everywhere); with tanh it gets 4/4. The LLM's code passed its own
+tests on seed 0 but learned XOR on only 9 of 20 seeds. Identical starting
+weights stay identical forever, and all-zero weights give exactly zero gradient
+on XOR.
+
+```bash
+cd "Neural Models Hands-on/deliverables" && python neural_xor.py
+```
+
+---
+
 ## Term project
 
 The term project (whospoke) lives in its own repository, not here:
@@ -137,4 +165,5 @@ python "Search Hands-on/deliverables/test_search.py"
 python "Logic Hands-on/deliverables/test_planner.py"
 python "Logic Hands-on/deliverables/run_prolog.py"
 python "Bayesian Networks Hands-on/deliverables/test_models.py"
+python "Neural Models Hands-on/deliverables/neural_xor.py"   # about 2 min, needs PyTorch
 ```
