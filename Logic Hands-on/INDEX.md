@@ -11,6 +11,7 @@ independent verifier of the result.
 ├── logic_lab_ex.pdf         <- the original lab handout
 │
 ├── deliverables/            <- SUBMIT THIS
+├── 2026-10-28 Locked-Door Navigation/   <- Section 4 (lab of 28 Oct): second planning domain
 └── explainers/              <- for understanding only, do not submit (LOCAL ONLY, git-ignored)
 ```
 

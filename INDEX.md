@@ -72,6 +72,7 @@ checked independently by Prolog.
 | Handout | [logic_lab_ex.pdf](Logic%20Hands-on/logic_lab_ex.pdf) |
 | Main report | [LAB_REPORT.md](Logic%20Hands-on/deliverables/LAB_REPORT.md) |
 | Code | `planner.py` · `test_planner.py` (42 checks) · `experiments.py` · `planner.pl` · `reasoning.pl` · `prolog_engine.py` · `run_prolog.py` |
+| Locked door (28 Oct) | [2026-10-28 Locked-Door Navigation/](Logic%20Hands-on/2026-10-28%20Locked-Door%20Navigation/README.md): second domain, key → unlock → reach C |
 | Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
 
 **Key findings:** The optimal plan has 4 actions: PickUp → Move(A,B) → Move(B,C) →
