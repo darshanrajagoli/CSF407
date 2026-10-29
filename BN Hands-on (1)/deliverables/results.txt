@@ -1,0 +1,77 @@
+Versions: pgmpy=1.1.2, numpy=2.3.5, pandas=3.0.1
+Graph: Cloudy -> Rain; Cloudy -> Sprinkler; Rain,Sprinkler -> WetGrass
+All states: 0=False, 1=True. Model valid: True
+P(Cloudy=1 | {}) = 0.500000000000
+P(Rain=1 | {'Cloudy': 0}) = 0.200000000000
+P(Rain=1 | {'Cloudy': 1}) = 0.800000000000
+P(Sprinkler=1 | {'Cloudy': 0}) = 0.500000000000
+P(Sprinkler=1 | {'Cloudy': 1}) = 0.100000000000
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 0}) = 0.010000000000
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 1}) = 0.900000000000
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 0}) = 0.900000000000
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 1}) = 0.990000000000
+
+INFERENCE: library result / independent enumeration
+P(Rain=1 | {}) = 0.500000000000 / 0.500000000000
+P(Sprinkler=1 | {}) = 0.300000000000 / 0.300000000000
+P(Cloudy=1 | {}) = 0.500000000000 / 0.500000000000
+P(Rain=1 | {'WetGrass': 1}) = 0.704769230769 / 0.704769230769
+P(Sprinkler=1 | {'WetGrass': 1}) = 0.427846153846 / 0.427846153846
+P(Cloudy=1 | {'WetGrass': 1}) = 0.574615384615 / 0.574615384615
+P(Rain=1 | {'WetGrass': 1, 'Sprinkler': 0}) = 0.992202204894 / 0.992202204894
+
+MLE N=1000 seed=7: Rain=1,Cloudy=1 count=401; Cloudy=1 count=502
+Manual P(Rain=1 | Cloudy=1)=0.798804780876; pgmpy=0.798804780876
+Learned MLE CPTs, N=1000:
+P(Cloudy=1 | {}) = 0.502000000000
+P(Rain=1 | {'Cloudy': 0}) = 0.194779116466
+P(Rain=1 | {'Cloudy': 1}) = 0.798804780876
+P(Sprinkler=1 | {'Cloudy': 0}) = 0.528112449799
+P(Sprinkler=1 | {'Cloudy': 1}) = 0.099601593625
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 0}) = 0.007326007326
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 1}) = 0.899563318777
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 0}) = 0.898550724638
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 1}) = 0.952380952381
+
+SAMPLE SIZE: N / Rain given Cloudy estimate / absolute error from 0.8
+20: 0.777778; error=0.022222
+50: 0.720000; error=0.080000
+100: 0.755556; error=0.044444
+500: 0.808765; error=0.008765
+1000: 0.798805; error=0.001195
+5000: 0.777375; error=0.022625
+
+SPARSE DATA: N=30 seed=11; same data for both estimators
+MLE: P(Rain=1 | Cloudy=1)=0.588235
+P(Cloudy=1 | {}) = 0.566666666667
+P(Rain=1 | {'Cloudy': 0}) = 0.384615384615
+P(Rain=1 | {'Cloudy': 1}) = 0.588235294118
+P(Sprinkler=1 | {'Cloudy': 0}) = 0.615384615385
+P(Sprinkler=1 | {'Cloudy': 1}) = 0.117647058824
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 0}) = 0.000000000000
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 1}) = 1.000000000000
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 0}) = 1.000000000000
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 1}) = 1.000000000000
+BDeu ESS=10: P(Rain=1 | Cloudy=1)=0.568182
+P(Cloudy=1 | {}) = 0.550000000000
+P(Rain=1 | {'Cloudy': 0}) = 0.416666666667
+P(Rain=1 | {'Cloudy': 1}) = 0.568181818182
+P(Sprinkler=1 | {'Cloudy': 0}) = 0.583333333333
+P(Sprinkler=1 | {'Cloudy': 1}) = 0.204545454545
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 0}) = 0.100000000000
+P(WetGrass=1 | {'Rain': 0, 'Sprinkler': 1}) = 0.833333333333
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 0}) = 0.900000000000
+P(WetGrass=1 | {'Rain': 1, 'Sprinkler': 1}) = 0.833333333333
+
+DIFFERENT DATASETS: N=100 / seed / Rain given Cloudy estimate
+seed=1: 0.727273
+seed=2: 0.836735
+seed=3: 0.897959
+seed=4: 0.725490
+seed=5: 0.714286
+
+VALIDATION FAILURES
+Non-normalized CPT (column sum 1.2): rejected, as expected.
+Wrong parent-state columns: check_model()=True
+Wrong P(Rain=1 | WetGrass=1)=0.717295226871
+Normalization alone cannot detect a semantically wrong CPT.

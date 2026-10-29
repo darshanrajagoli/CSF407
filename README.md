@@ -9,7 +9,8 @@ reports, code, handouts and run instructions.
 | Agents: Hands-on | [Agents](Agents%20Hands-on/INDEX.md) |
 | Search: Hands-on | [Search](Search%20Hands-on/INDEX.md) |
 | Logic: Hands-on | [Logic](Logic%20Hands-on/INDEX.md) |
-| BN: Lab; related AR Models work | [BN](BN%20Hands-on/INDEX.md) |
+| BN: Hands-on (1), Week 6 | [Sprinkler network](BN%20Hands-on%20%281%29/INDEX.md) |
+| BN: Lab, Week 8; related AR Models work | [BN](BN%20Hands-on/INDEX.md) |
 | Additional Transformer work | [Transformer notebook index](Machine%20Translation%20Hands-on/INDEX.md) |
 
 The course index distinguishes verified handout coverage from resource titles

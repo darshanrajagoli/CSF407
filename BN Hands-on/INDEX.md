@@ -1,5 +1,8 @@
 # CS F407 — BN: Lab (Bayesian Networks and Autoregressive Language Models)
 
+**Quanta Week 8: BN: Lab.** For the separate Week 6 Sprinkler-network practical,
+see [BN: Hands-on (1)](../BN%20Hands-on%20%281%29/INDEX.md).
+
 Build a tiny language model from six sentences: count which word follows which,
 turn the counts into probabilities, generate text, then add a second word of
 context and see what that buys and what it costs. Along the way, get an LLM to

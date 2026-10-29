@@ -1,0 +1,15 @@
+C:\Users\darsh\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\site-packages\pgmpy\estimators\__init__.py:4: FutureWarning: `pgmpy.estimators.StructureScore` is deprecated and will be removed in v1.3.0. Use `pgmpy.structure_score` instead.
+  from .StructureScore import (
+test_all_homework_queries (__main__.SprinklerTests.test_all_homework_queries) ... ok
+test_bdeu_matches_pseudocount_formula (__main__.SprinklerTests.test_bdeu_matches_pseudocount_formula) ... ok
+test_binary_states_with_sparse_data (__main__.SprinklerTests.test_binary_states_with_sparse_data) ... ok
+test_data_reproducibility (__main__.SprinklerTests.test_data_reproducibility) ... ok
+test_invalid_normalization_is_rejected (__main__.SprinklerTests.test_invalid_normalization_is_rejected) ... ok
+test_mle_matches_counts_and_keeps_graph (__main__.SprinklerTests.test_mle_matches_counts_and_keeps_graph) ... ok
+test_structure_and_all_joint_assignments (__main__.SprinklerTests.test_structure_and_all_joint_assignments) ... ok
+test_wrong_semantics_needs_more_than_normalization (__main__.SprinklerTests.test_wrong_semantics_needs_more_than_normalization) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.080s
+
+OK

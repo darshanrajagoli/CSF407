@@ -12,16 +12,16 @@ come from the course outline; they are not invented lab numbers.
 | 3 | Search: Lecture, Hands-on | [Search Hands-on](Search%20Hands-on/INDEX.md) |
 | 4 | Logic: Lecture, Hands-on | [Logic Hands-on](Logic%20Hands-on/INDEX.md), including the 28 October locked-door domain |
 | 5 | AR Models: Lecture (1), Lecture (2) | Related autoregressive-model work is in [BN Hands-on](BN%20Hands-on/INDEX.md) |
-| 6 | Probability: Intro; BN: Lecture; BN: Hands-on (1) | Related probability/BN work is in [BN Hands-on](BN%20Hands-on/INDEX.md) |
+| 6 | Probability: Intro; BN: Lecture; BN: Hands-on (1) | [BN: Hands-on (1)](BN%20Hands-on%20%281%29/INDEX.md): building and learning the Sprinkler network |
 | 7 | AR Models: Hands-on; RAG: Lecture (1), Lecture (2) | Related n-gram work is in [BN Hands-on](BN%20Hands-on/INDEX.md); no separate RAG deliverable is present |
 | 8 | BN: Lab | [BN Hands-on](BN%20Hands-on/INDEX.md): supplied BN lab handout, code and report |
 | 9–11 | No resources listed in the pasted outline | No additional resource mapping established |
 
 The outline gives resource titles, not the contents of its linked documents.
-The Week 6 and Week 7 hands-on resources have not been compared against their
-original contents here, so this table does not certify separate completion of
-those resources. BN and autoregressive language models share the existing
-bigram/trigram work; it has not been duplicated into artificial extra labs.
+Week 6 is mapped to the supplied Building and Learning a Bayesian Network
+notebook. The separate Week 7 AR Models hands-on resource has not been compared
+against its original contents, so this index does not certify its separate
+completion. Related autoregressive work remains in the Week 8 BN lab.
 
 ## Neural Models: Hands-on — Week 1
 
@@ -65,6 +65,17 @@ Prolog verification. Includes the second domain transcribed in class on
 - [Report](Logic%20Hands-on/deliverables/LAB_REPORT.md)
 - [Locked-door navigation](Logic%20Hands-on/2026-10-28%20Locked-Door%20Navigation/README.md)
 - [Handout](Logic%20Hands-on/logic_lab_ex.pdf)
+
+## BN: Hands-on (1) — Week 6
+
+Build the Cloudy/Rain/Sprinkler/WetGrass network, perform exact inference, learn
+CPTs from data using MLE and BDeu, and validate the model. Includes the homework
+queries, CPT interpretation, sample-size plot and different-seed exercise.
+
+- [Folder index](BN%20Hands-on%20%281%29/INDEX.md)
+- [Report](BN%20Hands-on%20%281%29/deliverables/LAB_REPORT.md)
+- [Code](BN%20Hands-on%20%281%29/deliverables/sprinkler.py)
+- [Supplied course notebook](BN%20Hands-on%20%281%29/source/building_and_learning_bn.ipynb)
 
 ## BN: Lab — Week 8; related BN / AR Models work
 
@@ -110,9 +121,11 @@ python "Search Hands-on/deliverables/test_search.py"
 python "Logic Hands-on/deliverables/test_planner.py"
 python "Logic Hands-on/deliverables/run_prolog.py"
 python "Logic Hands-on/2026-10-28 Locked-Door Navigation/locked_door.py"
+python "BN Hands-on (1)/deliverables/test_sprinkler.py"
 python "BN Hands-on/deliverables/test_models.py"
 python "Neural Models Hands-on/deliverables/neural_xor.py"
 ```
 
 The neural program requires PyTorch. The Transformer notebook documents its
-own dependencies. Other listed checks use the Python standard library.
+own dependencies. The Week 6 BN practical has its own pinned requirements
+file. Other listed checks use the Python standard library.
