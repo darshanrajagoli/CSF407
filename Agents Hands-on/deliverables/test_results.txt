@@ -1,0 +1,10 @@
+test_already_at_goal (__main__.AgentTests.test_already_at_goal) ... ok
+test_handout_map (__main__.AgentTests.test_handout_map) ... ok
+test_invalid_maps (__main__.AgentTests.test_invalid_maps) ... ok
+test_no_path (__main__.AgentTests.test_no_path) ... ok
+test_open_boundary (__main__.AgentTests.test_open_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.008s
+
+OK

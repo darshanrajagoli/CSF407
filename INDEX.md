@@ -1,170 +1,118 @@
-# CS F407: Artificial Intelligence — Repository Index
+# CS F407 — Artificial Intelligence
 
-Coursework for **CS F407 (Artificial Intelligence)**, one folder per lab.
+Coursework organized using the names and order in Quanta. Week numbers below
+come from the course outline; they are not invented lab numbers.
 
-```
-CS F407/
-├── INDEX.md                        <- this file
-├── ai_handout_2026-2027_s1.pdf     <- course handout
-│
-├── Search Hands-on/                <- Lab 1: Search and A*
-├── Logic Hands-on/                 <- Lab 2: Logical reasoning for planning (+ Prolog)
-├── Machine Translation Hands-on/   <- Lab 3: Transformer architectures
-├── Bayesian Networks Hands-on/     <- Lab 4: Bayesian networks and autoregressive language models
-└── Neural Models Hands-on/         <- Lab 5: Neural models (XOR, backprop, activations, softmax)
-```
+## Quanta course map
 
-Every lab folder has the same layout:
+| Week | Quanta resources | Work in this repository |
+|---|---|---|
+| 1 | Introduction; Neural Models: Lecture 1, Lecture 2, Hands-on | [Neural Models Hands-on](Neural%20Models%20Hands-on/INDEX.md) |
+| 2 | Agents: Lecture, Hands-on; LLMs: Lecture | [Agents Hands-on](Agents%20Hands-on/INDEX.md) |
+| 3 | Search: Lecture, Hands-on | [Search Hands-on](Search%20Hands-on/INDEX.md) |
+| 4 | Logic: Lecture, Hands-on | [Logic Hands-on](Logic%20Hands-on/INDEX.md), including the 28 October locked-door domain |
+| 5 | AR Models: Lecture (1), Lecture (2) | Related autoregressive-model work is in [BN Hands-on](BN%20Hands-on/INDEX.md) |
+| 6 | Probability: Intro; BN: Lecture; BN: Hands-on (1) | Related probability/BN work is in [BN Hands-on](BN%20Hands-on/INDEX.md) |
+| 7 | AR Models: Hands-on; RAG: Lecture (1), Lecture (2) | Related n-gram work is in [BN Hands-on](BN%20Hands-on/INDEX.md); no separate RAG deliverable is present |
+| 8 | BN: Lab | [BN Hands-on](BN%20Hands-on/INDEX.md): supplied BN lab handout, code and report |
+| 9–11 | No resources listed in the pasted outline | No additional resource mapping established |
 
-```
-<Lab>/
-├── INDEX.md          <- start here: what the lab asks for and where each answer is
-├── *_lab_ex.pdf      <- the handout (Lab 3 has none)
-├── deliverables/     <- what gets submitted (on GitHub)
-└── explainers/       <- plain-English study notes (LOCAL ONLY, git-ignored, not on GitHub)
-```
+The outline gives resource titles, not the contents of its linked documents.
+The Week 6 and Week 7 hands-on resources have not been compared against their
+original contents here, so this table does not certify separate completion of
+those resources. BN and autoregressive language models share the existing
+bigram/trigram work; it has not been duplicated into artificial extra labs.
 
-> **Explainers are local only.** Every `explainers/` folder is git-ignored and
-> is not on GitHub.
+## Neural Models: Hands-on — Week 1
 
----
+A small neural network learns XOR. The work covers depth, backpropagation,
+symmetry, sigmoid/tanh/ReLU and a three-class softmax output.
 
-## Course information
+- [Folder index](Neural%20Models%20Hands-on/INDEX.md)
+- [Report](Neural%20Models%20Hands-on/deliverables/LAB_REPORT.md)
+- [Code](Neural%20Models%20Hands-on/deliverables/neural_xor.py)
+- [Handout](Neural%20Models%20Hands-on/neur_models_lab_ex.pdf)
 
-- **Course:** CS F407 Artificial Intelligence (3 credits)
-- **Instructors:** Dr. Tirtharaj Dash (CC-107), Prof. Ashwin Srinivasan (D-167)
-- **Handout:** [ai_handout_2026-2027_s1.pdf](ai_handout_2026-2027_s1.pdf)
-- **Evaluation:** Lab work (best k of N) 20 · Comprehensive exam 30 ·
-  Course project 30 · Paper reading 10 · Tutorial participation 10
+## Agents: Hands-on — Week 2
 
----
+A standalone goal-based warehouse agent using BFS on the Agents handout's exact
+map. The verified shortest path is 20 moves. Covers problem understanding,
+scaling, architecture, algorithm explanation and execution checks. Personal
+process reflection is reserved for Darshan's final addition.
 
-## Lab 1 — Search and A\* ([`Search Hands-on/`](Search%20Hands-on/INDEX.md))
+- [Folder index](Agents%20Hands-on/INDEX.md)
+- [Report](Agents%20Hands-on/deliverables/LAB_REPORT.md)
+- [Code](Agents%20Hands-on/deliverables/agents.py)
+- [Handout](Agents%20Hands-on/agents_lab.pdf)
 
-A warehouse robot finding its way around a 64-cell grid: problem formulation,
-A\* vs BFS, and heuristic design, with an LLM writing the code.
+## Search: Hands-on — Week 3
 
-| | |
-|---|---|
-| Handout | [search_lab_ex.pdf](Search%20Hands-on/search_lab_ex.pdf) |
-| Main report | [LAB_REPORT.md](Search%20Hands-on/deliverables/LAB_REPORT.md) |
-| Code | `astar_warehouse.py` · `test_search.py` (20 checks) · `experiments.py` |
-| Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
+Warehouse search using A*, BFS, heuristic comparisons and correctness tests.
+This uses a different warehouse from the Agents handout.
 
-**Key findings:** The optimal path is 40 moves. On a unit-cost grid, when
-f-values tie, FIFO tie-breaking makes A\* expand as much as BFS; preferring the
-deeper node cuts expansions from 116 to 26 on an open test map. The inadmissible heuristic
-2×Manhattan gives a 30-move path where 28 is optimal.
+- [Folder index](Search%20Hands-on/INDEX.md)
+- [Report](Search%20Hands-on/deliverables/LAB_REPORT.md)
+- [Code](Search%20Hands-on/deliverables/astar_warehouse.py)
+- [Handout](Search%20Hands-on/search_lab_ex.pdf)
 
-```bash
-cd "Search Hands-on/deliverables" && python test_search.py && python experiments.py
-```
+## Logic: Hands-on — Week 4
 
----
+Package-delivery planning using logical preconditions/effects and BFS, with
+Prolog verification. Includes the second domain transcribed in class on
+28 October 2026: collect the key, unlock the door and reach room C.
 
-## Lab 2 — Logical Reasoning for Planning ([`Logic Hands-on/`](Logic%20Hands-on/INDEX.md))
+- [Folder index](Logic%20Hands-on/INDEX.md)
+- [Report](Logic%20Hands-on/deliverables/LAB_REPORT.md)
+- [Locked-door navigation](Logic%20Hands-on/2026-10-28%20Locked-Door%20Navigation/README.md)
+- [Handout](Logic%20Hands-on/logic_lab_ex.pdf)
 
-Logic + search = planning: a propositional planner for moving a package A → C,
-checked independently by Prolog.
+## BN: Lab — Week 8; related BN / AR Models work
 
-| | |
-|---|---|
-| Handout | [logic_lab_ex.pdf](Logic%20Hands-on/logic_lab_ex.pdf) |
-| Main report | [LAB_REPORT.md](Logic%20Hands-on/deliverables/LAB_REPORT.md) |
-| Code | `planner.py` · `test_planner.py` (42 checks) · `experiments.py` · `planner.pl` · `reasoning.pl` · `prolog_engine.py` · `run_prolog.py` |
-| Locked door (28 Oct) | [2026-10-28 Locked-Door Navigation/](Logic%20Hands-on/2026-10-28%20Locked-Door%20Navigation/README.md): second domain, key → unlock → reach C |
-| Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
+First-order and second-order autoregressive language models viewed as Bayesian
+networks. Includes conditional probability tables, generation, probability
+checks and the supplied handout's questions/reflection.
 
-**Key findings:** The optimal plan has 4 actions: PickUp → Move(A,B) → Move(B,C) →
-Drop. The `visited` set is needed for the planner to terminate, not just to make
-it faster. An LLM-generated `Move(A,C)` passed every Python check and was only
-caught by the independent Prolog knowledge base.
+- [Folder index](BN%20Hands-on/INDEX.md)
+- [Report](BN%20Hands-on/deliverables/LAB_REPORT.md)
+- [First-order code](BN%20Hands-on/deliverables/bigram_model.py)
+- [Second-order code](BN%20Hands-on/deliverables/trigram_model.py)
+- [Handout](BN%20Hands-on/bn_lab_ex.pdf)
 
-```bash
-cd "Logic Hands-on/deliverables" && python test_planner.py && python run_prolog.py
-```
+This folder was previously named `Bayesian Networks Hands-on`; it is now
+`BN Hands-on` to follow Quanta's label.
 
----
+## Additional work — Transformer architectures
 
-## Lab 3 — Transformer Architectures ([`Machine Translation Hands-on/`](Machine%20Translation%20Hands-on/INDEX.md))
+The [Machine Translation Hands-on folder](Machine%20Translation%20Hands-on/INDEX.md)
+contains [a notebook](Machine%20Translation%20Hands-on/deliverables/transformer_architectures_demo.ipynb)
+with encoder–decoder translation, decoder-only generation and encoder-only
+sentiment examples. Its exact Quanta resource association is unverified, so it
+is listed separately rather than assigned a course week.
 
-One notebook with one small demo per transformer shape: encoder-decoder
-(translation, M2M100), decoder-only (generation, GPT-2) and encoder-only
-(sentiment, DistilBERT).
+## Repository layout and study material
 
-| | |
-|---|---|
-| Notebook | [transformer_architectures_demo.ipynb](Machine%20Translation%20Hands-on/deliverables/transformer_architectures_demo.ipynb) |
-| Explainer (local) | `explainers/explainer.md` — from zero to the whole picture, with notes boxes |
+Each lab has an `INDEX.md`, a `deliverables/` folder and its original PDF when
+available. Existing `explainers/` folders contain local study notes and are
+Git-ignored. The new Agents lab keeps its explanation in the report.
 
----
+The [course handout](ai_handout_2026-2027_s1.pdf) is at the repository root.
+The term project, [whospoke](https://github.com/darshanrajagoli/whospoke), has its
+own repository; the local `project/` checkout is excluded from this repository.
 
-## Lab 4 — Bayesian Networks and Autoregressive LMs ([`Bayesian Networks Hands-on/`](Bayesian%20Networks%20Hands-on/INDEX.md))
+## Run checks
 
-A first-order and a second-order n-gram language model built from six sentences,
-seen as Bayesian networks: CPTs from counts, greedy vs sampled generation, and
-the cost of more context.
-
-| | |
-|---|---|
-| Handout | [bn_lab_ex.pdf](Bayesian%20Networks%20Hands-on/bn_lab_ex.pdf) |
-| Main report | [LAB_REPORT.md](Bayesian%20Networks%20Hands-on/deliverables/LAB_REPORT.md) — Q1–Q14 plus the reflection |
-| Code | `bigram_model.py` · `trigram_model.py` · `run_lab.py` · `test_models.py` (26 checks) |
-| Prompts | [prompts.md](Bayesian%20Networks%20Hands-on/deliverables/prompts.md) |
-| Explainers (local) | `explainers/explainer.md` (from zero to the whole picture, with notes boxes) · `explainers/code_walkthrough.md` |
-
-**Key findings:** Greedy decoding loops forever (the → cat → sat → on → the …),
-and the LLM's first version hung. A second word of context makes predictions
-sharper, but 96 of 111 contexts have no data, and the model can only repeat its
-six training sentences. Normalisation and chain-rule tests catch bugs that the
-generated text hides.
+From this repository's root:
 
 ```bash
-cd "Bayesian Networks Hands-on/deliverables" && python test_models.py && python run_lab.py
-```
-
----
-
-## Lab 5 — Neural Models ([`Neural Models Hands-on/`](Neural%20Models%20Hands-on/INDEX.md))
-
-A 2–2–1 PyTorch network learns XOR (a "sensors disagree" warning). The lab covers
-why a nonlinear hidden layer is needed, checks backpropagation's gradients,
-shows the symmetry problem, compares sigmoid/tanh/ReLU, and extends the output
-to three classes with softmax.
-
-| | |
-|---|---|
-| Handout | [neur_models_lab_ex.pdf](Neural%20Models%20Hands-on/neur_models_lab_ex.pdf) |
-| Main report | [LAB_REPORT.md](Neural%20Models%20Hands-on/deliverables/LAB_REPORT.md) — Tasks 1–5, all Think About It boxes, reflection Q1–Q7 |
-| Code | `neural_xor.py` (the whole lab in one file, needs PyTorch) |
-| Prompts | [prompts.md](Neural%20Models%20Hands-on/deliverables/prompts.md) — prompts and the LLM's code as generated |
-| Explainers (local) | `explainers/explainer.md` (from zero to the whole picture, with notes boxes) · `explainers/code_walkthrough.md` |
-
-**Key findings:** A hidden layer without a nonlinearity fails exactly like a linear
-model (P = 0.5 everywhere); with tanh it gets 4/4. The LLM's code passed its own
-tests on seed 0 but learned XOR on only 9 of 20 seeds. Identical starting
-weights stay identical forever, and all-zero weights give exactly zero gradient
-on XOR.
-
-```bash
-cd "Neural Models Hands-on/deliverables" && python neural_xor.py
-```
-
----
-
-## Term project
-
-The term project (whospoke) lives in its own repository, not here:
-https://github.com/darshanrajagoli/whospoke
-
----
-
-## Run every test
-
-```bash
+python "Agents Hands-on/deliverables/agents.py"
+python "Agents Hands-on/deliverables/test_agents.py"
 python "Search Hands-on/deliverables/test_search.py"
 python "Logic Hands-on/deliverables/test_planner.py"
 python "Logic Hands-on/deliverables/run_prolog.py"
-python "Bayesian Networks Hands-on/deliverables/test_models.py"
-python "Neural Models Hands-on/deliverables/neural_xor.py"   # about 2 min, needs PyTorch
+python "Logic Hands-on/2026-10-28 Locked-Door Navigation/locked_door.py"
+python "BN Hands-on/deliverables/test_models.py"
+python "Neural Models Hands-on/deliverables/neural_xor.py"
 ```
+
+The neural program requires PyTorch. The Transformer notebook documents its
+own dependencies. Other listed checks use the Python standard library.

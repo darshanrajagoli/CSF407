@@ -1,4 +1,4 @@
-# CS F407 — Laboratory: Bayesian Networks and Autoregressive Language Models
+# CS F407 — BN: Lab (Bayesian Networks and Autoregressive Language Models)
 
 Build a tiny language model from six sentences: count which word follows which,
 turn the counts into probabilities, generate text, then add a second word of
